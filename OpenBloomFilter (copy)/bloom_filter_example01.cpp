@@ -1,10 +1,4 @@
 
-/*
-   Description: This example demonstrates basic usage of the Bloom filter.
-                Initially some values are inserted then they are subsequently
-                queried, noting any false positives or errors.
-*/
-
 
 #include <iostream>
 #include <string>
@@ -18,10 +12,10 @@ int main()
    bloom_parameters parameters;
 
    // How many elements roughly do we expect to insert?
-   parameters.projected_element_count = 1000;
+   parameters.expected_elements = 1000;
 
    // Maximum tolerable false positive probability? (0,1)
-   parameters.false_positive_probability = 0.0001; // 1 in 10000
+   parameters.false_positive_p = 0.0001; // 1 in 10000
 
    // Simple randomizer (optional)
    parameters.random_seed = 0xA5A5A5A5;
@@ -40,7 +34,7 @@ int main()
    string str_list[] = { "AbC", "iJk", "XYZ" };
 
    // Insert into Bloom Filter
-   {
+   
       // Insert some strings
       for (size_t i = 0; i < (sizeof(str_list) / sizeof(string)); ++i)
       {
@@ -48,14 +42,13 @@ int main()
       }
 
       // Insert some numbers
-      for (size_t i = 0; i < 100; ++i)
+      for (size_t i = 0; i < 101; ++i)
       {
          filter.insert(i);
       }
-   }
+   
 
    // Query Bloom Filter
-   {
       // Query the existence of strings
       for (size_t i = 0; i < (sizeof(str_list) / sizeof(string)); ++i)
       {
@@ -66,34 +59,13 @@ int main()
       }
 
       // Query the existence of numbers
-      for (size_t i = 100; i < 200; ++i)
+      for (size_t i =90; i < 110; ++i)
       {
          if (filter.contains(i))
          {
             cout << "BF contains: " << i << endl;
          }
       }
-
-      string invalid_str_list[] = { "AbCX", "iJkX", "XYZX" };
-
-      // Query the existence of invalid strings
-      for (size_t i = 0; i < (sizeof(invalid_str_list) / sizeof(string)); ++i)
-      {
-         if (filter.contains(invalid_str_list[i]))
-         {
-            cout << "BF falsely contains: " << invalid_str_list[i] << endl;
-         }
-      }
-
-      // Query the existence of invalid numbers
-      for (int i = -1; i > -100; --i)
-      {
-         if (filter.contains(i))
-         {
-            cout << "BF falsely contains: " << i << endl;
-         }
-      }
-   }
 
    return 0;
 }

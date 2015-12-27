@@ -81,8 +81,8 @@ int main(int argc, char* argv[])
    while (random_seed < rounds)
    {
       bloom_parameters parameters;
-      parameters.projected_element_count    = word_list.size();
-      parameters.false_positive_probability = desired_probability_of_false_positive;
+      parameters.expected_elements    = word_list.size();
+      parameters.false_positive_p = desired_probability_of_false_positive;
       parameters.random_seed                = ++random_seed;
 
       if (!parameters)

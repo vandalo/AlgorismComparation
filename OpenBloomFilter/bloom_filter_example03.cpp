@@ -25,21 +25,22 @@
 #include <string>
 
 #include "bloom_filter.hpp"
+using namespace std;
 
-bool load_word_list(int argc, char* argv[], std::vector<std::string>& word_list);
+bool load_word_list(int argc, char* argv[], vector<string>& word_list);
 
 template <class T,
           class Allocator,
           template <class,class> class Container>
-bool read_file(const std::string& file_name, Container<T, Allocator>& c);
+bool read_file(const string& file_name, Container<T, Allocator>& c);
 
-void generate_outliers(const std::vector<std::string>& word_list, std::deque<std::string>& outliers);
-void purify_outliers(const std::vector<std::string>& word_list,std::deque<std::string>& outliers);
+void generate_outliers(const vector<string>& word_list, deque<string>& outliers);
+void purify_outliers(const vector<string>& word_list,deque<string>& outliers);
 
 int main(int argc, char* argv[])
 {
-   std::vector<std::string> word_list;
-   std::deque<std::string> outliers;
+   vector<string> word_list;
+   deque<string> outliers;
 
    if (!load_word_list(argc,argv,word_list))
    {
@@ -60,7 +61,7 @@ int main(int argc, char* argv[])
 
    if (!parameters)
    {
-      std::cout << "Error - Invalid set of bloom filter parameters!" << std::endl;
+      cout << "Error - Invalid set of bloom filter parameters!" << endl;
       return 1;
    }
 
@@ -70,20 +71,20 @@ int main(int argc, char* argv[])
 
    filter.insert(word_list.begin(),word_list.end());
 
-   std::cout << "Filter Size\tEFPP    \tOFPP    \tDiff" << std::endl;
+   cout << "Filter Size\tEFPP    \tOFPP    \tDiff" << endl;
 
    while (filter.size() > 1)
    {
-      std::vector<std::string>::iterator it = filter.contains_all(word_list.begin(),word_list.end());
+      vector<string>::iterator it = filter.contains_all(word_list.begin(),word_list.end());
       if (word_list.end() != it)
       {
-         std::cout << "ERROR: key not found in bloom filter! =>" << (*it) << std::endl;
+         cout << "ERROR: key not found in bloom filter! =>" << (*it) << endl;
          return 1;
       }
 
-      std::size_t total_false_positive = 0;
+      size_t total_false_positive = 0;
 
-      for (std::deque<std::string>::iterator it = outliers.begin(); it != outliers.end(); ++it)
+      for (deque<string>::iterator it = outliers.begin(); it != outliers.end(); ++it)
       {
          if (filter.contains(*it)) ++total_false_positive;
       }
@@ -98,7 +99,7 @@ int main(int argc, char* argv[])
 
       if (!filter.compress(5.0))
       {
-         std::cout << "Filter cannot be compressed any further." << std::endl;
+         cout << "Filter cannot be compressed any further." << endl;
          break;
       }
    }
@@ -106,33 +107,33 @@ int main(int argc, char* argv[])
    return 0;
 }
 
-bool load_word_list(int argc, char* argv[], std::vector<std::string>& word_list)
+bool load_word_list(int argc, char* argv[], vector<string>& word_list)
 {
    // Note: The word-lists can be obtained from:
    // http://code.google.com/p/bloom/source/browse/#svn/trunk
-   static const std::string wl_list[] =
+   static const string wl_list[] =
                      { "word-list.txt",
                        "word-list-large.txt",
                        "word-list-extra-large.txt",
                        "random-list.txt"
                      };
 
-   std::size_t index = 0;
+   size_t index = 0;
 
    if (2 == argc)
    {
       index = ::atoi(argv[1]);
 
-      const std::size_t wl_list_size = sizeof(wl_list) / sizeof(std::string);
+      const size_t wl_list_size = sizeof(wl_list) / sizeof(string);
 
       if (index >= wl_list_size)
       {
-         std::cout << "Invalid world list index: " << index << std::endl;
+         cout << "Invalid world list index: " << index << endl;
          return false;
       }
    }
 
-   std::cout << "Loading list " << wl_list[index] << ".....";
+   cout << "Loading list " << wl_list[index] << ".....";
    if (!read_file(wl_list[index],word_list))
    {
       return false;
@@ -140,11 +141,11 @@ bool load_word_list(int argc, char* argv[], std::vector<std::string>& word_list)
 
    if (word_list.empty())
    {
-      std::cout << "No word list - Either none requested, or desired word list could not be loaded." << std::endl;
+      cout << "No word list - Either none requested, or desired word list could not be loaded." << endl;
       return false;
    }
    else
-      std::cout << " Complete." << std::endl;
+      cout << " Complete." << endl;
 
    return true;
 }
@@ -152,19 +153,19 @@ bool load_word_list(int argc, char* argv[], std::vector<std::string>& word_list)
 template <class T,
           class Allocator,
           template <class,class> class Container>
-bool read_file(const std::string& file_name, Container<T, Allocator>& c)
+bool read_file(const string& file_name, Container<T, Allocator>& c)
 {
-   std::ifstream stream(file_name.c_str());
+   ifstream stream(file_name.c_str());
 
    if (!stream)
    {
-      std::cout << "Error: Failed to open file '" << file_name << "'" << std::endl;
+      cout << "Error: Failed to open file '" << file_name << "'" << endl;
       return false;
    }
 
-   std::string buffer;
+   string buffer;
 
-   while (std::getline(stream,buffer))
+   while (getline(stream,buffer))
    {
       c.push_back(buffer);
    }
@@ -172,17 +173,17 @@ bool read_file(const std::string& file_name, Container<T, Allocator>& c)
    return true;
 }
 
-std::string reverse(std::string str)
+string reverse(string str)
 {
    // Not the most efficient way of doing this.
-   std::reverse(str.begin(),str.end());
+   reverse(str.begin(),str.end());
    return str;
 }
 
-void generate_outliers(const std::vector<std::string>& word_list, std::deque<std::string>& outliers)
+void generate_outliers(const vector<string>& word_list, deque<string>& outliers)
 {
-   std::cout << "Generating outliers..... ";
-   for (std::vector<std::string>::const_iterator it = word_list.begin(); it != word_list.end(); ++it)
+   cout << "Generating outliers..... ";
+   for (vector<string>::const_iterator it = word_list.begin(); it != word_list.end(); ++it)
    {
       if ((*it) != reverse((*it)))
       {
@@ -191,7 +192,7 @@ void generate_outliers(const std::vector<std::string>& word_list, std::deque<std
          outliers.push_back(reverse((*it)) + (*it) + reverse((*it)));
       }
 
-      std::string ns = *it;
+      string ns = *it;
       for (unsigned int i = 0; i < ns.size(); ++i)
       {
          if (1 == (i & 0x00)) ns[i] = ~ns[i];
@@ -200,7 +201,7 @@ void generate_outliers(const std::vector<std::string>& word_list, std::deque<std
       outliers.push_back(ns);
    }
 
-   static const std::string rand_str[] =
+   static const string rand_str[] =
                   {
                      "oD5l", "pccW", "5yHt", "ndaN", "OaJh", "tWPc", "Cr9C", "a9zE",
                      "H1wL", "yo1V", "16D7", "f2WR", "0MVQ", "PkKn", "PlVa", "MvzL",
@@ -246,17 +247,17 @@ void generate_outliers(const std::vector<std::string>& word_list, std::deque<std
                      "XRW3ZSG1gw", "WcIjTxMxOM", "wNqCAIaTb2", "gO4em4HW8H", "TgGFSMEtbG", "WiwmbEw3QA",
                      "D2xshYUgpu", "xRUZCQVzBs", "nCnUmMgIjE", "p4Ewt1yCJr", "MeOjDcaMY5", "1XelMeXiiI"
                   };
-   static const std::size_t rand_str_size = sizeof(rand_str) / sizeof(std::string);
+   static const size_t rand_str_size = sizeof(rand_str) / sizeof(string);
 
    for (unsigned int i = 0; i < rand_str_size; ++i)
    {
-      std::string s0 = rand_str[i];
-      std::string s1 = rand_str[(i + 1) % rand_str_size];
-      std::string s2 = rand_str[(i + 2) % rand_str_size];
-      std::string s3 = rand_str[(i + 3) % rand_str_size];
-      std::string s4 = rand_str[(i + 4) % rand_str_size];
-      std::string s5 = rand_str[(i + 5) % rand_str_size];
-      std::string s6 = rand_str[(i + 6) % rand_str_size];
+      string s0 = rand_str[i];
+      string s1 = rand_str[(i + 1) % rand_str_size];
+      string s2 = rand_str[(i + 2) % rand_str_size];
+      string s3 = rand_str[(i + 3) % rand_str_size];
+      string s4 = rand_str[(i + 4) % rand_str_size];
+      string s5 = rand_str[(i + 5) % rand_str_size];
+      string s6 = rand_str[(i + 6) % rand_str_size];
 
       outliers.push_back(s0);
       outliers.push_back(s0 + s1);
@@ -272,34 +273,34 @@ void generate_outliers(const std::vector<std::string>& word_list, std::deque<std
       outliers.push_back(reverse(s0 + s1 + s2 + s3 + s4 + s5));
       outliers.push_back(reverse(s0 + s1 + s2 + s3 + s4 + s5 + s6));
    }
-   std::sort(outliers.begin(),outliers.end());
+   sort(outliers.begin(),outliers.end());
    purify_outliers(word_list,outliers);
-   std::cout << "Complete." << std::endl;
+   cout << "Complete." << endl;
 }
 
-void purify_outliers(const std::vector<std::string>& word_list, std::deque<std::string>& outliers)
+void purify_outliers(const vector<string>& word_list, deque<string>& outliers)
 {
-   std::set<std::string> set1;
-   std::set<std::string> set2;
+   set<string> set1;
+   set<string> set2;
 
-   std::copy(word_list.begin(), word_list.end(),std::inserter(set1,set1.begin()));
-   std::copy(outliers.begin(), outliers.end(), std::inserter(set2,set2.begin()));
+   copy(word_list.begin(), word_list.end(),inserter(set1,set1.begin()));
+   copy(outliers.begin(), outliers.end(), inserter(set2,set2.begin()));
 
-   std::deque<std::string> intersect_list;
+   deque<string> intersect_list;
 
-   std::set_intersection(set1.begin(),set1.end(),
+   set_intersection(set1.begin(),set1.end(),
                          set2.begin(),set2.end(),
-                         std::back_inserter(intersect_list));
+                         back_inserter(intersect_list));
 
-   std::sort(intersect_list.begin(),intersect_list.end());
+   sort(intersect_list.begin(),intersect_list.end());
 
    if (!intersect_list.empty())
    {
-      std::deque<std::string> new_outliers;
+      deque<string> new_outliers;
 
-      for (std::deque<std::string>::iterator it = outliers.begin(); it != outliers.end(); ++it)
+      for (deque<string>::iterator it = outliers.begin(); it != outliers.end(); ++it)
       {
-         if (!std::binary_search(intersect_list.begin(),intersect_list.end(),*it))
+         if (!binary_search(intersect_list.begin(),intersect_list.end(),*it))
          {
             new_outliers.push_back(*it);
          }
