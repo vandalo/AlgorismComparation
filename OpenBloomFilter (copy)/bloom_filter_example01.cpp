@@ -42,7 +42,7 @@ int main()
       }
 
       // Insert some numbers
-      for (size_t i = 0; i < 101; ++i)
+      for (size_t i = 1000; i < 1010; ++i)
       {
          filter.insert(i);
       }
@@ -59,7 +59,7 @@ int main()
       }
 
       // Query the existence of numbers
-      for (size_t i =90; i < 110; ++i)
+      for (size_t i =1005; i < 1015; ++i)
       {
          if (filter.contains(i))
          {

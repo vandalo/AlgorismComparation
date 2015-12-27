@@ -12,15 +12,15 @@ using namespace std;
 
 static const size_t bits_per_char = 0x08;    // 8 bits in 1 char(unsigned)
 static const unsigned char bit_mask[bits_per_char] = {
-                                                       0x01,  //00000001
-                                                       0x02,  //00000010
-                                                       0x04,  //00000100
-                                                       0x08,  //00001000
-                                                       0x10,  //00010000
-                                                       0x20,  //00100000
-                                                       0x40,  //01000000
-                                                       0x80   //10000000
-                                                     };
+	0x01,  //00000001
+	0x02,  //00000010
+	0x04,  //00000100
+	0x08,  //00001000
+	0x10,  //00010000
+	0x20,  //00100000
+	0x40,  //01000000
+	0x80   //10000000
+	};
 
 class bloom_parameters {
 public:
@@ -68,62 +68,62 @@ public:
    optimal_parameters_t optimal_parameters;
 
    virtual bool compute_optimal_parameters() {
-      if (!(*this)) return false;
-      double min_m = numeric_limits<double>::infinity();
-      double min_k = 0.0;
-      double curr_m = 0.0;
-      double k = 1.0;
+		if (!(*this)) return false;
+		double min_m = numeric_limits<double>::infinity();
+		double min_k = 0.0;
+		double curr_m = 0.0;
+		double k = 1.0;
 
-      while (k < 1000.0) {
-         double numerator  = (- k * expected_elements);
-         double denominator = log(1.0 - pow(false_positive_p, 1.0 / k));
-         curr_m = numerator / denominator;
-         if (curr_m < min_m)  {
-            min_m = curr_m;
-            min_k = k;
-         }
-         k += 1.0;
-      }
+		while (k < 1000.0) {
+			double numerator  = (- k * expected_elements);
+			double denominator = log(1.0 - pow(false_positive_p, 1.0 / k));
+			curr_m = numerator / denominator;
+			if (curr_m < min_m)  {
+				min_m = curr_m;
+				min_k = k;
+			}
+			k += 1.0;
+		}
 
-      optimal_parameters_t& optp = optimal_parameters;
+		optimal_parameters_t& optp = optimal_parameters;
 
-      optp.number_of_hashes = static_cast<unsigned int>(min_k);
-      optp.table_size = static_cast<unsigned long long int>(min_m);
-      optp.table_size += (((optp.table_size % bits_per_char) != 0) ? (bits_per_char - (optp.table_size % bits_per_char)) : 0);
+		optp.number_of_hashes = static_cast<unsigned int>(min_k);
+		optp.table_size = static_cast<unsigned long long int>(min_m);
+		optp.table_size += (((optp.table_size % bits_per_char) != 0) ? (bits_per_char - (optp.table_size % bits_per_char)) : 0);
 
-      if (optp.number_of_hashes < min_hashes) optp.number_of_hashes = min_hashes;
-      else if (optp.number_of_hashes > max_hashes) optp.number_of_hashes = max_hashes;
+		if (optp.number_of_hashes < min_hashes) optp.number_of_hashes = min_hashes;
+		else if (optp.number_of_hashes > max_hashes) optp.number_of_hashes = max_hashes;
 
-      if (optp.table_size < min_size) optp.table_size = min_size;
-      else if (optp.table_size > max_size) optp.table_size = max_size;
+		if (optp.table_size < min_size) optp.table_size = min_size;
+		else if (optp.table_size > max_size) optp.table_size = max_size;
 
-      return true;
-   }
+		return true;
+	}
 
 };
 
 class bloom_filter {
 protected:
 
-   typedef unsigned int bloom_type;
-   typedef unsigned char cell_type;
+	typedef unsigned int bloom_type;
+	typedef unsigned char cell_type;
 
 public:
 
-   bloom_filter(const bloom_parameters& p)
-   : bit_table_(0),
-     expected_elements_(p.expected_elements),
-     inserted_elements(0),
-     random_seed_((p.random_seed * 0xA5A5A5A5) + 1),
-     desired_false_positive_p_(p.false_positive_p)
-   {
-      salt_count_ = p.optimal_parameters.number_of_hashes;
-      table_size_ = p.optimal_parameters.table_size;
-      generate_unique_salt();
-      raw_table_size_ = table_size_ / bits_per_char;
-      bit_table_ = new cell_type[static_cast<size_t>(raw_table_size_)];
-      fill_n(bit_table_,raw_table_size_,0x00);
-   }
+	bloom_filter(const bloom_parameters& p)
+	: bit_table_(0),
+		expected_elements_(p.expected_elements),
+		inserted_elements(0),
+		random_seed_((p.random_seed * 0xA5A5A5A5) + 1),
+		desired_false_positive_p_(p.false_positive_p)
+	{
+		salt_count_ = p.optimal_parameters.number_of_hashes;
+		table_size_ = p.optimal_parameters.table_size;
+		generate_unique_salt();
+		raw_table_size_ = table_size_ / bits_per_char;
+		bit_table_ = new cell_type[static_cast<size_t>(raw_table_size_)];
+		fill_n(bit_table_,raw_table_size_,0x00);
+	}
 
 
 	virtual ~bloom_filter() {
@@ -254,25 +254,23 @@ public:
                                     0xC569F575, 0xCDB2A091, 0x2CC016B4, 0x5C5F4421
                                  };
 
-      if (salt_count_ <= predef_salt_count) {
-         copy(predef_salt,
-                   predef_salt + salt_count_,
-                   back_inserter(salt_));
-          for (unsigned int i = 0; i < salt_.size(); ++i) {
-            salt_[i] = salt_[i] * salt_[(i + 3) % salt_.size()] + static_cast<bloom_type>(random_seed_);
-          }
-      }
-      else {
-         copy(predef_salt,predef_salt + predef_salt_count,back_inserter(salt_));
-         srand(static_cast<unsigned int>(random_seed_));
-         while (salt_.size() < salt_count_) {
-            bloom_type current_salt = static_cast<bloom_type>(rand()) * static_cast<bloom_type>(rand());
-            if (0 == current_salt) continue;
-            if (salt_.end() == find(salt_.begin(), salt_.end(), current_salt)) {
-               salt_.push_back(current_salt);
-            }
-         }
-      }
+		if (salt_count_ <= predef_salt_count) {
+			copy(predef_salt, predef_salt + salt_count_, back_inserter(salt_));
+			for (unsigned int i = 0; i < salt_.size(); ++i) {
+				salt_[i] = salt_[i] * salt_[(i + 3) % salt_.size()] + static_cast<bloom_type>(random_seed_);
+			}
+		}
+		else {
+			copy(predef_salt,predef_salt + predef_salt_count,back_inserter(salt_));
+			srand(static_cast<unsigned int>(random_seed_));
+			while (salt_.size() < salt_count_) {
+				bloom_type current_salt = static_cast<bloom_type>(rand()) * static_cast<bloom_type>(rand());
+				if (0 == current_salt) continue;
+				if (salt_.end() == find(salt_.begin(), salt_.end(), current_salt)) {
+				salt_.push_back(current_salt);
+				}
+			}
+		}
    }
 
 	inline bloom_type hash_ap(const unsigned char* begin, size_t remaining_length, bloom_type hash) const {
@@ -323,5 +321,5 @@ public:
 };
 
 #endif
-
+//g++ -pedantic-errors -ansi -Wall -Wextra -Werror -Wno-long-long -O3 -o bloom_filter_example01 bloom_filter.cpp bloom_parameters.cpp main_bloom.cpp -L/usr/lib -lstdc++
 
