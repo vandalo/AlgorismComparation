@@ -60,13 +60,38 @@ public:
 		return contains(reinterpret_cast<const unsigned char*>(&t),static_cast<unsigned int>(sizeof(T)));
 	}
 	
+	
+	
+	////////////
+	
+	inline void insert(const string& key) {
+		insert((const unsigned char*)key.c_str(),key.size());
+	}
+
+	inline void insert(const char* data, const size_t& length) {
+      insert((const unsigned char*)data,length);
+	}
+   
+	inline bool contains(const string& key) const {
+		return contains((const unsigned char*)key.c_str(),key.size());
+	}
+
+   inline bool contains(const char* data, const size_t& length) const {
+		return contains((const unsigned char*)data,length);
+	}
+   
+   
+   
+//////////////
+	
+	
 
 	inline virtual unsigned long long int size() const {
 		return table_size_;
 	}
 
 
-	protected:
+protected:
 	inline virtual void compute_indices(const bloom_type& hash, unsigned int& bit_index, unsigned int& bit) const {
 		bit_index = hash % table_size_;
 		bit = bit_index % bits_per_char;
@@ -107,7 +132,7 @@ public:
 		}
 		return hash;
 	}
-
+	
 	vector<bloom_type> hash_vec;
 	unsigned char*          bit_table_;
 	unsigned int            numHashes;
