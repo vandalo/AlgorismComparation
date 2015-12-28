@@ -20,8 +20,8 @@ public:
 	inline void insert(const unsigned char* key_begin, const size_t& length) {
 		size_t bit_index = 0;
 		size_t bit = 0;
-		for (size_t i = 0; i < salt_.size(); ++i) {
-			compute_indices(hash_ap(key_begin,length,salt_[i]),bit_index,bit);
+		for (size_t i = 0; i < hash_vec.size(); ++i) {
+			compute_indices(hash_ap(key_begin,length,hash_vec[i]),bit_index,bit);
 			bit_table_[bit_index / bits_per_char] |= bit_mask[bit];
 		}
 		++inserted_elements;
@@ -33,8 +33,6 @@ public:
 	}
 
 	
-	////////
-	
 
 	template<typename InputIterator>
 	inline void insert(const InputIterator begin, const InputIterator end) {
@@ -43,28 +41,14 @@ public:
 			insert(*(itr++));
 		}
 	}
-   
-   
-   
-	template<typename InputIterator>
-	inline InputIterator contains_all(const InputIterator begin, const InputIterator end) const {
-		InputIterator itr = begin;
-		while (end != itr) {
-			if (!contains(*itr)) {
-				return itr;
-			} ++itr;
-		} return end;
-	}
-	
-	///////////////
-	
+
 	
 
 	inline virtual bool contains(const unsigned char* key_begin, const size_t length) const {
 		size_t bit_index = 0;
 		size_t bit = 0;
-		for (size_t i = 0; i < salt_.size(); ++i) {
-			compute_indices(hash_ap(key_begin,length,salt_[i]),bit_index,bit);
+		for (size_t i = 0; i < hash_vec.size(); ++i) {
+			compute_indices(hash_ap(key_begin,length,hash_vec[i]),bit_index,bit);
 			if ((bit_table_[bit_index / bits_per_char] & bit_mask[bit]) != bit_mask[bit]) {
 				return false;
 			}
@@ -81,11 +65,6 @@ public:
 
 	inline virtual unsigned long long int size() const {
 		return table_size_;
-	}
-
-
-	inline double effective_fpp() const {
-		return pow(1.0 - exp(-1.0 * salt_.size() * inserted_elements / size()), 1.0 * salt_.size());
 	}
 
 
@@ -134,16 +113,15 @@ public:
 		return hash;
 	}
 
-	vector<bloom_type> salt_;
+	vector<bloom_type> hash_vec;
 	unsigned char*          bit_table_;
-	unsigned int            salt_count_;
+	unsigned int            numHashes;
 	unsigned long long int  table_size_;
 	unsigned long long int  raw_table_size_;
-	unsigned long long int  expected_elements_;
 	unsigned int            inserted_elements;
-	unsigned long long int  random_seed_;
-	double                  desired_false_positive_p_;
+	unsigned long long int  random_seed;
+	double                  falsepp;
 };
 
 
-
+//return pow(1.0 - exp(-1.0 * salt_.size() * inserted_elements / size()), 1.0 * salt_.size());

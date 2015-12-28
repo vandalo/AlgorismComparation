@@ -2,10 +2,9 @@
 using namespace std;
 
 
-bloom_filter::bloom_filter(const bloom_parameters& p): expected_elements_(p.expected_elements),
-		random_seed_((p.random_seed * 0xA5A5A5A5) + 1),
-		desired_false_positive_p_(p.false_positive_p) {
-			salt_count_ = p.opt_par.number_of_hashes;
+bloom_filter::bloom_filter(const bloom_parameters& p): random_seed((p.random_seed * 0xA5A5A5A5) + 1),
+		falsepp(p.false_positive_p) {
+			numHashes = p.opt_par.number_of_hashes;
 			table_size_ = p.opt_par.table_size;
 			generate_unique_salt();
 			raw_table_size_ = table_size_ / bits_per_char;
@@ -15,8 +14,8 @@ bloom_filter::bloom_filter(const bloom_parameters& p): expected_elements_(p.expe
 
 
 void bloom_filter::generate_unique_salt() {
-		const unsigned int predef_salt_count = 128;
-		static const bloom_type predef_salt[predef_salt_count] = {
+		const unsigned int predef_numHashes = 128;
+		static const bloom_type predef_salt[predef_numHashes] = {
 			0xAAAAAAAA, 0x55555555, 0x33333333, 0xCCCCCCCC,
 			0x66666666, 0x99999999, 0xB5B5B5B5, 0x4B4B4B4B,
 			0xAA55AA55, 0x55335533, 0x33CC33CC, 0xCC66CC66,
@@ -50,20 +49,20 @@ void bloom_filter::generate_unique_salt() {
 			0xF874B172, 0x0CF914D5, 0x784D3280, 0x4E8CFEBC,
 			0xC569F575, 0xCDB2A091, 0x2CC016B4, 0x5C5F4421 };
 
-		if (salt_count_ <= predef_salt_count) {
-			copy(predef_salt, predef_salt + salt_count_, back_inserter(salt_));
-			for (unsigned int i = 0; i < salt_.size(); ++i) {
-				salt_[i] = salt_[i] * salt_[(i + 3) % salt_.size()] + static_cast<bloom_type>(random_seed_);
+		if (numHashes <= predef_numHashes) {
+			copy(predef_salt, predef_salt + numHashes, back_inserter(hash_vec));
+			for (unsigned int i = 0; i < hash_vec.size(); ++i) {
+				hash_vec[i] = hash_vec[i] * hash_vec[(i + 3) % hash_vec.size()] + static_cast<bloom_type>(random_seed);
 			}
 		}
 		else {
-			copy(predef_salt,predef_salt + predef_salt_count,back_inserter(salt_));
-			srand(static_cast<unsigned int>(random_seed_));
-			while (salt_.size() < salt_count_) {
+			copy(predef_salt,predef_salt + predef_numHashes,back_inserter(hash_vec));
+			srand(static_cast<unsigned int>(random_seed));
+			while (hash_vec.size() < numHashes) {
 				bloom_type current_salt = static_cast<bloom_type>(rand()) * static_cast<bloom_type>(rand());
 				if (0 == current_salt) continue;
-				if (salt_.end() == find(salt_.begin(), salt_.end(), current_salt)) {
-				salt_.push_back(current_salt);
+				if (hash_vec.end() == find(hash_vec.begin(), hash_vec.end(), current_salt)) {
+				hash_vec.push_back(current_salt);
 				}
 			}
 		}

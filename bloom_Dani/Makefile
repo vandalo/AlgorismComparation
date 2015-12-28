@@ -21,11 +21,11 @@ BUILD+=bloom_filter_example02
 
 all: $(BUILD)
 
-bloom_filter_example01: bloom_filter.hpp bloom_parameters.hpp bloom_filter.cpp bloom_parameters.cpp main_bloom.cpp
-	$(COMPILER) $(OPTIONS) bloom_filter_example01 main_bloom.cpp bloom_filter.cpp bloom_parameters.cpp $(LINKER_OPT)
+bloom_filter_example01: bloom_filter.hpp bloom_parameters.hpp bloom_filter.cpp bloom_parameters.cpp main_bloom.cpp bloom_inout.hpp bloom_inout.cpp
+	$(COMPILER) $(OPTIONS) bloom_filter_example01 main_bloom.cpp bloom_filter.cpp bloom_parameters.cpp bloom_inout.cpp $(LINKER_OPT)
 	
-bloom_filter_example02: bloom_filter.hpp bloom_parameters.hpp bloom_filter.cpp bloom_parameters.cpp bloom_filter_example02.cpp
-	$(COMPILER) $(OPTIONS) bloom_filter_example02 bloom_filter_example02.cpp bloom_filter.cpp bloom_parameters.cpp $(LINKER_OPT)
+bloom_filter_example02: bloom_filter.hpp bloom_parameters.hpp bloom_filter.cpp bloom_parameters.cpp bloom_filter_example02.cpp bloom_inout.hpp bloom_inout.cpp
+	$(COMPILER) $(OPTIONS) bloom_filter_example02 bloom_filter_example02.cpp bloom_filter.cpp bloom_parameters.cpp bloom_inout.cpp $(LINKER_OPT)
 
 clean:
 	rm -f core *.o *.bak *stackdump *#
