@@ -4,7 +4,7 @@ using namespace std;
 
 bloom_inout::bloom_inout(){}
 
-bool bloom_inout::load_word_list(int argc, char* argv[], vector<unsigned int>& word_list){
+bool bloom_inout::load_word_list(int argc, char* argv[], vector<int>& word_list){
    static const string wl_list[] = { "word-list.txt",
 		"word-list-large.txt",
 		"random-list.txt" ,
@@ -23,22 +23,22 @@ bool bloom_inout::load_word_list(int argc, char* argv[], vector<unsigned int>& w
 
 //creamos algunos elementos que no estan en el diccionario para 
 //comprobar la probabilidad de que nos salga un falso positivo
-void bloom_inout::generate_outliers(const vector<unsigned int>& word_list, deque<unsigned int>& outliers){
+void bloom_inout::generate_outliers(const vector<string>& word_list, deque<string>& outliers){
    cout << "Generando palabras inexistentes... ";
-   /*for (vector<unsigned int>::const_iterator it = word_list.begin(); it != word_list.end(); ++it) {
+   for (vector<string>::const_iterator it = word_list.begin(); it != word_list.end(); ++it) {
       if ((*it) != reverse((*it))) {
          outliers.push_back((*it) + reverse((*it)));
          outliers.push_back((*it) + (*it));
          outliers.push_back(reverse((*it)) + (*it) + reverse((*it)));
       }
-      unsigned int ns = *it;
-      for (unsigned int i = 0; i < ns.length(); ++i) {
+      string ns = *it;
+      for (unsigned int i = 0; i < ns.size(); ++i) {
          if (1 == (i & 0x00)) ns[i] = ~ns[i];
       }
       outliers.push_back(ns);
-   }*/
+   }
 
-	/*static const string rand_str[] = {
+	static const string rand_str[] = {
 		"oD5l", "pccW", "5yHt", "ndaN", "OaJh", "tWPc", "Cr9C", "a9zE",
 		"H1wL", "yo1V", "16D7", "f2WR", "0MVQ", "PkKn", "PlVa", "MvzL",
 		"9Csl", "JQTv", "IveD", "FDVS", "Q7HE", "QgcF", "Q9Vo", "V8zJ",
@@ -84,9 +84,9 @@ void bloom_inout::generate_outliers(const vector<unsigned int>& word_list, deque
 		"D2xshYUgpu", "xRUZCQVzBs", "nCnUmMgIjE", "p4Ewt1yCJr", "MeOjDcaMY5", "1XelMeXiiI"
 	};
 
-	static const unsigned int rand_str_size = sizeof(rand_str) / sizeof(string);*/
+	static const unsigned int rand_str_size = sizeof(rand_str) / sizeof(string);
 
-	/*for (unsigned int i = 0; i < rand_str_size; ++i) {
+	for (unsigned int i = 0; i < rand_str_size; ++i) {
 		string s0 = rand_str[i];
 		string s1 = rand_str[(i + 1) % rand_str_size];
 		string s2 = rand_str[(i + 2) % rand_str_size];
@@ -108,21 +108,21 @@ void bloom_inout::generate_outliers(const vector<unsigned int>& word_list, deque
 		outliers.push_back(reverse(s0 + s1 + s3));
 		outliers.push_back(reverse(s0 + s1 + s2 + s3 + s4 + s5));
 		outliers.push_back(reverse(s0 + s1 + s2 + s3 + s4 + s5 + s6));
-	}*/
+	}
 	sort(outliers.begin(),outliers.end());
 	purify_outliers(word_list,outliers);
 	cout << "Fin." << endl;
 	}
 
 	//funcion para eliminar los elementos que si que existen en el diccionario
-void bloom_inout::purify_outliers(const vector<unsigned int>& word_list, deque<unsigned int>& outliers) {
-	set<unsigned int> set1;
-	set<unsigned int> set2;
+void bloom_inout::purify_outliers(const vector<string>& word_list, deque<string>& outliers) {
+	set<string> set1;
+	set<string> set2;
 
 	copy(word_list.begin(), word_list.end(),inserter(set1,set1.begin()));
 	copy(outliers.begin(), outliers.end(), inserter(set2,set2.begin()));
 
-	deque<unsigned int> intersect_list;
+	deque<string> intersect_list;
 
 	set_intersection(set1.begin(),set1.end(), set2.begin(),set2.end(),
 		back_inserter(intersect_list));
@@ -130,8 +130,8 @@ void bloom_inout::purify_outliers(const vector<unsigned int>& word_list, deque<u
 	sort(intersect_list.begin(),intersect_list.end());
 
 	if (!intersect_list.empty()) {
-		deque<unsigned int> new_outliers;
-		for (deque<unsigned int>::iterator it = outliers.begin(); it != outliers.end(); ++it) {
+		deque<string> new_outliers;
+		for (deque<string>::iterator it = outliers.begin(); it != outliers.end(); ++it) {
 			if (!binary_search(intersect_list.begin(),intersect_list.end(),*it)) {
 				new_outliers.push_back(*it);
 			}
