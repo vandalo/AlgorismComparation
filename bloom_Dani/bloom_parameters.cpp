@@ -5,9 +5,9 @@ using namespace std;
 bloom_parameters::bloom_parameters(unsigned long long int elements_num, 
 		double p, unsigned long long int seed): min_size(1),
      max_size(numeric_limits<unsigned long long int>::max()),
-     min_hashes(1), max_hashes(maxSize), 
-     expected_elements(elements_num),
-     false_positive_p(p), random_seed(seed){
+     expected_elements(elements_num), random_seed(seed),
+     min_hashes(1), max_hashes(maxSize),
+     false_positive_p(p) {
 		 calcular_optimos();
 	}
 
@@ -32,14 +32,14 @@ bool bloom_parameters::calcular_optimos(){
 		}
 		
 		//guardamos los parametros optimos
-		opt_par.number_of_hashes = static_cast<unsigned int>(min_k);
-		opt_par.table_size = static_cast<unsigned long long int>(min_m);
+		opt_par.num_hashes = (unsigned int)min_k;
+		opt_par.table_size = (unsigned long long int)min_m;
 		opt_par.table_size += (((opt_par.table_size % bits_per_char) != 0) 
 				? (bits_per_char - (opt_par.table_size % bits_per_char)) : 0);
 
 		//si el num de hashes esta fuera de los limites lo corregimos
-		if (opt_par.number_of_hashes < min_hashes) opt_par.number_of_hashes = min_hashes;
-		else if (opt_par.number_of_hashes > max_hashes) opt_par.number_of_hashes = max_hashes;
+		if (opt_par.num_hashes < min_hashes) opt_par.num_hashes = min_hashes;
+		else if (opt_par.num_hashes > max_hashes) opt_par.num_hashes = max_hashes;
 
 		//lo mismo con el tamano de la tabla
 		if (opt_par.table_size < min_size) opt_par.table_size = min_size;

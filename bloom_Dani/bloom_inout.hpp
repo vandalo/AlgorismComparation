@@ -1,13 +1,8 @@
 #include <iostream>
-#include <cstddef>
-#include <cstdio>
 #include <fstream>
-#include <iterator>
-#include <algorithm>
 #include <vector>
 #include <deque>
 #include <set>
-#include <string>
 #include "bloom_filter.hpp"
 using namespace std;
 
@@ -31,7 +26,7 @@ public:
 
 	inline string uppercase(string str) {
 		for (size_t i = 0; i < str.size(); ++i) {
-			str[i] = static_cast<char>(toupper(str[i]));
+			str[i] = (char)toupper(str[i]);
 		}
 		return str;
 	}

@@ -8,7 +8,6 @@ protected:
 	typedef unsigned char cell_type;
 
 public:
-
 	bloom_filter(const bloom_parameters& p);
 
 
@@ -17,22 +16,22 @@ public:
 	}
 
 
-	inline void insert(const unsigned char* key_begin, const size_t& length) {
-		size_t bit_index = 0;
-		size_t bit = 0;
-		for (size_t i = 0; i < hash_vec.size(); ++i) {
+	inline void insert(const unsigned char* key_begin, const unsigned int& length) {
+		unsigned int bit_index = 0;
+		unsigned int bit = 0;
+		for (unsigned int i = 0; i < hash_vec.size(); ++i) {
 			compute_indices(hash_ap(key_begin,length,hash_vec[i]),bit_index,bit);
 			bit_table_[bit_index / bits_per_char] |= bit_mask[bit];
 		}
 		++inserted_elements;
 	}
 
+	
 	template<typename T>
 	inline void insert(const T& t) {
-		insert(reinterpret_cast<const unsigned char*>(&t),sizeof(T));
+		insert((const unsigned char*)&t,sizeof(T));
 	}
 
-	
 
 	template<typename InputIterator>
 	inline void insert(const InputIterator begin, const InputIterator end) {
@@ -41,13 +40,12 @@ public:
 			insert(*(itr++));
 		}
 	}
-
 	
 
-	inline virtual bool contains(const unsigned char* key_begin, const size_t length) const {
-		size_t bit_index = 0;
-		size_t bit = 0;
-		for (size_t i = 0; i < hash_vec.size(); ++i) {
+	inline virtual bool contains(const unsigned char* key_begin, const unsigned int length) const {
+		unsigned int bit_index = 0;
+		unsigned int bit = 0;
+		for (unsigned int i = 0; i < hash_vec.size(); ++i) {
 			compute_indices(hash_ap(key_begin,length,hash_vec[i]),bit_index,bit);
 			if ((bit_table_[bit_index / bits_per_char] & bit_mask[bit]) != bit_mask[bit]) {
 				return false;
@@ -56,11 +54,11 @@ public:
 		return true;
 	}
 
+	
 	template<typename T>
 	inline bool contains(const T& t) const {
-		return contains(reinterpret_cast<const unsigned char*>(&t),static_cast<size_t>(sizeof(T)));
+		return contains(reinterpret_cast<const unsigned char*>(&t),static_cast<unsigned int>(sizeof(T)));
 	}
-
 	
 
 	inline virtual unsigned long long int size() const {
@@ -68,9 +66,8 @@ public:
 	}
 
 
-
 	protected:
-	inline virtual void compute_indices(const bloom_type& hash, size_t& bit_index, size_t& bit) const {
+	inline virtual void compute_indices(const bloom_type& hash, unsigned int& bit_index, unsigned int& bit) const {
 		bit_index = hash % table_size_;
 		bit = bit_index % bits_per_char;
 	}
@@ -78,18 +75,18 @@ public:
 	void generate_unique_salt(); 
 	
 
-	inline bloom_type hash_ap(const unsigned char* begin, size_t remaining_length, bloom_type hash) const {
+	inline bloom_type hash_ap(const unsigned char* begin, unsigned int remaining_length, bloom_type hash) const {
 		const unsigned char* itr = begin;
 		unsigned int loop = 0;
 		while (remaining_length >= 8) {
 			const unsigned int& i1 = *(reinterpret_cast<const unsigned int*>(itr)); itr += sizeof(unsigned int);
-			const unsigned int& i2 = *(reinterpret_cast<const unsigned int*>(itr)); itr += sizeof(unsigned int);
+			const unsigned int& i2 = *((const unsigned int*)itr); itr += sizeof(unsigned int);
 			hash ^= (hash <<  7) ^  i1 * (hash >> 3) ^ (~((hash << 11) + (i2 ^ (hash >> 5))));
 			remaining_length -= 8;
 		}
 		if (remaining_length) {
 			if (remaining_length >= 4)  {
-				const unsigned int& i = *(reinterpret_cast<const unsigned int*>(itr));
+				const unsigned int& i = *((const unsigned int*)itr);
 				if (loop & 0x01) hash ^=    (hash <<  7) ^  i * (hash >> 3);
 				else hash ^= (~((hash << 11) + (i ^ (hash >> 5))));
 				++loop;
@@ -97,11 +94,9 @@ public:
 				itr += sizeof(unsigned int);
 			}
 			if (remaining_length >= 2) {
-				const unsigned short& i = *(reinterpret_cast<const unsigned short*>(itr));
-				if (loop & 0x01)
-				hash ^=    (hash <<  7) ^  i * (hash >> 3);
-				else
-				hash ^= (~((hash << 11) + (i ^ (hash >> 5))));
+				const unsigned short& i = *((const unsigned short*)itr);
+				if (loop & 0x01) hash ^=    (hash <<  7) ^  i * (hash >> 3);
+				else hash ^= (~((hash << 11) + (i ^ (hash >> 5))));
 				++loop;
 				remaining_length -= 2;
 				itr += sizeof(unsigned short);

@@ -1,14 +1,4 @@
 
-#include <iostream>
-#include <cstddef>
-#include <cstdio>
-#include <fstream>
-#include <iterator>
-#include <algorithm>
-#include <vector>
-#include <deque>
-#include <set>
-#include <string>
 
 #include "bloom_inout.hpp"
 using namespace std;
@@ -21,9 +11,7 @@ int main(int argc, char* argv[]) {
    deque<string> outliers;
 	bloom_inout inout;
 	//LOAD WORD LIST
-	if (!inout.load_word_list(argc,argv,word_list)) {
-		return 1;
-	}
+	if (!inout.load_word_list(argc,argv,word_list)) return 1;
 
 	inout.generate_outliers(word_list,outliers);
 	printf("Round\t   Queries\t   FPQ\t   IPFP\t           PFP\t            DPFP\t    TvD\n");
@@ -31,9 +19,8 @@ int main(int argc, char* argv[]) {
 	//CONTADORES
 	const double expected_fpp = 1.0 / word_list.size();
 	unsigned int word_list_storage_size = 0;
-	for (unsigned int i = 0; i < word_list.size(); ++i) {
-		word_list_storage_size += word_list[i].size();
-	}
+	for (unsigned int i = 0; i < word_list.size(); ++i)
+			word_list_storage_size += word_list[i].size();
 	unsigned int random_seed = 0;
 	unsigned int total_number_of_queries = 0;
 	unsigned int max_false_positive_count = 0;
@@ -53,9 +40,8 @@ int main(int argc, char* argv[]) {
 
 		current_falsep = 0;
 
-		for (deque<string>::iterator it = outliers.begin(); it != outliers.end(); ++it) {
-			if (filter.contains(*it)) ++current_falsep;
-		}
+		for (deque<string>::iterator it = outliers.begin(); it != outliers.end(); ++it)
+				if (filter.contains(*it)) ++current_falsep;
  
 		total_number_of_queries += (outliers.size() + word_list.size());
 

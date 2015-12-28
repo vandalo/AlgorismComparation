@@ -4,11 +4,11 @@ using namespace std;
 
 bloom_filter::bloom_filter(const bloom_parameters& p): random_seed((p.random_seed * 0xA5A5A5A5) + 1),
 		falsepp(p.false_positive_p) {
-			numHashes = p.opt_par.number_of_hashes;
+			numHashes = p.opt_par.num_hashes;
 			table_size_ = p.opt_par.table_size;
 			generate_unique_salt();
 			raw_table_size_ = table_size_ / bits_per_char;
-			bit_table_ = new cell_type[static_cast<size_t>(raw_table_size_)];
+			bit_table_ = new cell_type[(size_t)raw_table_size_];
 			fill_n(bit_table_,raw_table_size_,0x00);
 		}
 
@@ -52,15 +52,15 @@ void bloom_filter::generate_unique_salt() {
 		if (numHashes <= predef_numHashes) {
 			copy(predef_salt, predef_salt + numHashes, back_inserter(hash_vec));
 			for (unsigned int i = 0; i < hash_vec.size(); ++i) {
-				hash_vec[i] = hash_vec[i] * hash_vec[(i + 3) % hash_vec.size()] + static_cast<bloom_type>(random_seed);
+				hash_vec[i] = hash_vec[i] * hash_vec[(i + 3) % hash_vec.size()] + (bloom_type)random_seed;
 			}
 		}
 		else {
 			copy(predef_salt,predef_salt + predef_numHashes,back_inserter(hash_vec));
 			srand(static_cast<unsigned int>(random_seed));
 			while (hash_vec.size() < numHashes) {
-				bloom_type current_salt = static_cast<bloom_type>(rand()) * static_cast<bloom_type>(rand());
-				if (0 == current_salt) continue;
+				bloom_type current_salt = (bloom_type)rand() * (bloom_type)rand();
+				if (current_salt == 0) continue;
 				if (hash_vec.end() == find(hash_vec.begin(), hash_vec.end(), current_salt)) {
 				hash_vec.push_back(current_salt);
 				}
