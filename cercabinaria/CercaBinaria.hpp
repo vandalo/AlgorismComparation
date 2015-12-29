@@ -10,7 +10,7 @@ class CercaBinaria {
 
 	private:
 		vector<int> diccionari;
-		ofstream arxiu_diccionari;
+		ifstream arxiu_diccionari;
 
 		int binary_search(const vector<int>& v, int x, int esq, int dre);
 

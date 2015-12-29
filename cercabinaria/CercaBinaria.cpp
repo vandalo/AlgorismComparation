@@ -13,13 +13,13 @@ int CercaBinaria::binary_search(const vector<int>& v, int x, int esq, int dre){
 }
 
 CercaBinaria::CercaBinaria(const char* path){
-	(this->arxiu_diccionari).open(path);
+	arxiu_diccionari.open(path);
 	int n;
-	cin >> n;
-	this->diccionari = vector<int>(n);
-	for(int i=0; i < n; ++i) cin >> (this->diccionari[i]);
-	sort((this-> diccionari).begin(), (this-> diccionari).end());
-	(this->arxiu_diccionari).close();
+	arxiu_diccionari >> n;
+	diccionari = vector<int>(n);
+	for(int i=0; i < n; ++i) arxiu_diccionari >> diccionari[i];
+	sort(diccionari.begin(), diccionari.end());
+	arxiu_diccionari.close();
 }
 
 bool CercaBinaria::existeix(int n){
