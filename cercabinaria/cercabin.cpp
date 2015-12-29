@@ -19,12 +19,12 @@ int binary_search(const vector<int>& v, int x, int esq, int dre){
 
 int main(){
 
-	int n,count = 0;
-	vector<int> v;
+	int n,x,count = 0;
+	
 
 	//leer num. palabras diccionario
 	cin >> n;
-
+	vector<int> v(n);
 	//leer diccionario
 	for(int i =0; i < n; ++i) cin >> v[i];
 
@@ -36,8 +36,8 @@ int main(){
 
 	//leer texto
 	for(int i =0; i < n; ++i){
-		cin >> n;
-		if(binary_search(v,n,0,v.size()-1) > -1) count++;
+		cin >> x;
+		if(binary_search(v,x,0,v.size()-1) > -1) count++;
 	}
 
 	cout << "nombre de paraules trobades en el diccionari " << count << endl;
