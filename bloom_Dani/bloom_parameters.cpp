@@ -32,18 +32,18 @@ bool bloom_parameters::calcular_optimos(){
 		}
 		
 		//guardamos los parametros optimos
-		opt_par.num_hashes = (unsigned int)min_k;
-		opt_par.table_size = (unsigned long long int)min_m;
-		opt_par.table_size += (((opt_par.table_size % bits_per_char) != 0) 
-				? (bits_per_char - (opt_par.table_size % bits_per_char)) : 0);
+		optimos.num_hashes = (unsigned int)min_k;
+		optimos.table_size = (unsigned long long int)min_m;
+		optimos.table_size += (((optimos.table_size % bits_per_char) != 0) 
+				? (bits_per_char - (optimos.table_size % bits_per_char)) : 0);
 
 		//si el num de hashes esta fuera de los limites lo corregimos
-		if (opt_par.num_hashes < min_hashes) opt_par.num_hashes = min_hashes;
-		else if (opt_par.num_hashes > max_hashes) opt_par.num_hashes = max_hashes;
+		if (optimos.num_hashes < min_hashes) optimos.num_hashes = min_hashes;
+		else if (optimos.num_hashes > max_hashes) optimos.num_hashes = max_hashes;
 
 		//lo mismo con el tamano de la tabla
-		if (opt_par.table_size < min_size) opt_par.table_size = min_size;
-		else if (opt_par.table_size > max_size) opt_par.table_size = max_size;
+		if (optimos.table_size < min_size) optimos.table_size = min_size;
+		else if (optimos.table_size > max_size) optimos.table_size = max_size;
 
 		return true;
 }

@@ -10,16 +10,12 @@ protected:
 public:
 	bloom_filter(const bloom_parameters& p);
 
-
 	virtual ~bloom_filter() {
 		delete[] bit_table_;
 	}
 
-
-	
-		////////////
 		//FUNCIONES PARA INSERIR Y COMPROBAR EXISTENCIA DE LAS PALABRAS
-	inline void insert(const unsigned char* key_begin, const unsigned int& length) {
+	inline void insert(const unsigned int key_begin, const unsigned int& length) {
 		unsigned int bit_index = 0;
 		unsigned int bit = 0;
 		for (unsigned int i = 0; i < hash_vec.size(); ++i) {
@@ -28,24 +24,18 @@ public:
 		}
 		++inserted_elements;
 	}
-
 	
-	template<typename T>
-	inline void insert(const T& t) {
-		insert((const unsigned char*)&t,sizeof(T));
-	}
 
-
-	template<typename InputIterator>
-	inline void insert(const InputIterator begin, const InputIterator end) {
-		InputIterator itr = begin;
+	template<typename Iterator>
+	inline void insert(const Iterator begin, const Iterator end) {
+		Iterator itr = begin;
 		while (end != itr) {
-			insert(*(itr++));
+			insert(*(itr++), 1);
 		}
 	}
 	
 
-	inline virtual bool contains(const unsigned char* key_begin, const unsigned int length) const {
+	inline virtual bool contains(const unsigned int key_begin, const unsigned int length) const {
 		unsigned int bit_index = 0;
 		unsigned int bit = 0;
 		for (unsigned int i = 0; i < hash_vec.size(); ++i) {
@@ -56,31 +46,14 @@ public:
 		}
 		return true;
 	}
-
 	
-	template<typename T>
-	inline bool contains(const T& t) const {
-		return contains(reinterpret_cast<const unsigned char*>(&t),static_cast<unsigned int>(sizeof(T)));
+	template<typename InputIterator>
+	inline unsigned int contains(const InputIterator begin, const InputIterator end) {
+		unsigned int cont = 0;
+		InputIterator itr = begin;
+		while (end != itr) if(contains(*(itr++), 1)) cont++;
+		return cont;
 	}
-
-	
-	inline void insert(const string& key) {
-		insert((const unsigned char*)key.c_str(),key.size());
-	}
-
-	inline void insert(const char* data, const size_t& length) {
-      insert((const unsigned char*)data,length);
-	}
-   
-	inline bool contains(const string& key) const {
-		return contains((const unsigned char*)key.c_str(),key.size());
-	}
-
-   inline bool contains(const char* data, const size_t& length) const {
-		return contains((const unsigned char*)data,length);
-	}
-   
-//////////////
 	
 	
 
@@ -102,10 +75,10 @@ protected:
 	void generate_unique_salt(); 
 	
 
-	inline bloom_type hash_ap(const unsigned char* begin, unsigned int remaining_length, bloom_type hash) const {
-		const unsigned char* itr = begin;
+	inline bloom_type hash_ap(const unsigned int begin, unsigned int remaining_length, bloom_type hash) const {
+		const unsigned int itr = begin;
 		unsigned int loop = 0;
-		while (remaining_length >= 8) {
+		/*while (remaining_length >= 8) {
 			const unsigned int& i1 = *((const unsigned int*)itr); itr += sizeof(unsigned int);
 			const unsigned int& i2 = *((const unsigned int*)itr); itr += sizeof(unsigned int);
 			hash ^= (hash <<  7) ^  i1 * (hash >> 3) ^ (~((hash << 11) + (i2 ^ (hash >> 5))));
@@ -127,11 +100,11 @@ protected:
 				++loop;
 				remaining_length -= 2;
 				itr += sizeof(unsigned short);
-			}
+			}*/
 			if (remaining_length) {
-				hash += ((*itr) ^ (hash * 0xA5A5A5A5)) + loop;
+				hash += (itr ^ (hash * 0xA5A5A5A5)) + loop;
 			}
-		}
+		//}
 		return hash;
 	}
 	

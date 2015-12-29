@@ -4,8 +4,8 @@ using namespace std;
 
 bloom_filter::bloom_filter(const bloom_parameters& p): random_seed((p.random_seed * 0xA5A5A5A5) + 1),
 		falsepp(p.false_positive_p) {
-			numHashes = p.opt_par.num_hashes;
-			table_size_ = p.opt_par.table_size;
+			numHashes = p.optimos.num_hashes;
+			table_size_ = p.optimos.table_size;
 			generate_unique_salt();
 			raw_table_size_ = table_size_ / bits_per_char;
 			bit_table_ = new cell_type[(size_t)raw_table_size_];

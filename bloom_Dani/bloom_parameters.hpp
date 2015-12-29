@@ -21,7 +21,7 @@ public:
 		optimos() {}
 		unsigned int num_hashes; //la k de la formula
 		unsigned long long int table_size; //la m de la formula
-	} opt_par;
+	} optimos;
 	
 	unsigned long long int min_size, max_size, expected_elements, random_seed;
 	unsigned int min_hashes, max_hashes;

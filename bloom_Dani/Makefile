@@ -16,7 +16,6 @@ OPTIMIZATION_OPT = -O3
 OPTIONS          = -pedantic-errors -ansi -Wall -Wextra -Werror -Wno-long-long $(OPTIMIZATION_OPT) -o
 LINKER_OPT       = -L/usr/lib -lstdc++
 
-BUILD+=bloom_filter_example01
 BUILD+=bloom_filter_example02
 
 all: $(BUILD)

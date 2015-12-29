@@ -8,6 +8,7 @@
 #include <limits>
 #include <string>
 #include <vector>
+#include <iostream>
 using namespace std;
 
 static const size_t bits_per_char = 0x08;    // 8 bits in 1 char(unsigned)

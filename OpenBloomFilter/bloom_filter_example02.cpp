@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
    unsigned long long int bloom_filter_size = 0;
 
 
-   static const unsigned int rounds = 1000;
+   static const unsigned int rounds = 100;
 
    while (random_seed < rounds)
    {
