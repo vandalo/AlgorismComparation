@@ -8,9 +8,9 @@
 #include <vector>
 using namespace std;
 
-static const unsigned int bits_per_char = 0x08;    // 8 bits in 1 char(unsigned)
-static const unsigned char bit_mask[bits_per_char] = {
-	0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
+//static const unsigned int bits_per_char = 0x08;    // 8 bits in 1 char(unsigned)
+//static const unsigned char bit_mask[bits_per_char] = {
+//	0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
 
 class bloom_parameters {
 public:

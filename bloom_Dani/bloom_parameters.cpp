@@ -34,8 +34,6 @@ bool bloom_parameters::calcular_optimos(){
 		//guardamos los parametros optimos
 		optimos.num_hashes = (unsigned int)min_k;
 		optimos.table_size = (unsigned long long int)min_m;
-		optimos.table_size += (((optimos.table_size % bits_per_char) != 0) 
-				? (bits_per_char - (optimos.table_size % bits_per_char)) : 0);
 
 		//si el num de hashes esta fuera de los limites lo corregimos
 		if (optimos.num_hashes < min_hashes) optimos.num_hashes = min_hashes;
