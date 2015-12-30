@@ -2,7 +2,7 @@
 
 
 int CercaBinaria::binary_search(const vector<int>& v, int x, int esq, int dre){
-
+    this->num_comprovacions++;
 	if(esq > dre) return -1;
 
 	int mid = (esq+dre) / 2;
@@ -14,6 +14,7 @@ int CercaBinaria::binary_search(const vector<int>& v, int x, int esq, int dre){
 
 CercaBinaria::CercaBinaria(const char* path){
 	arxiu_diccionari.open(path);
+    this->num_comprovacions = 0;
 	int n;
 	arxiu_diccionari >> n;
 	diccionari = vector<int>(n);
@@ -27,3 +28,6 @@ bool CercaBinaria::existeix(int n){
 
 }
 
+int CercaBinaria::getComprovacions(){
+    return this->num_comprovacions;
+}

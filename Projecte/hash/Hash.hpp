@@ -27,6 +27,7 @@ class taula_hash {
 protected:
     vector<list<int> >hash;
     int max_list_size;
+    int num_comprovacions;
     
 public:
     //crea una taula de temany Temany
@@ -37,6 +38,9 @@ public:
     
     //afegeix una key al diccionari
     void insertKey(int key);
+    
+    //retorna el numero de comprovacions que s'han fet en la taula
+    int getComprovacions();
     
 protected:
     //fa el modul amb temany de taula i retorna la posició
