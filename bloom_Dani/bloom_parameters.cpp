@@ -1,5 +1,6 @@
 #define maxSize 10000000
 #include "bloom_parameters.hpp"
+#include <iostream>
 using namespace std;
 
 bloom_parameters::bloom_parameters(unsigned long long int elements_num, 
@@ -30,7 +31,6 @@ bool bloom_parameters::calcular_optimos(){
 			}
 			k += 1.0;
 		}
-		
 		//guardamos los parametros optimos
 		optimos.num_hashes = (unsigned int)min_k;
 		optimos.table_size = (unsigned long long int)min_m;
