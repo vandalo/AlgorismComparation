@@ -1,5 +1,4 @@
 #include "bloom_filter.hpp"
-#include <iostream>
 using namespace std;
 
 
