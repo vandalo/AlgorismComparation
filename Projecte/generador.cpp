@@ -9,6 +9,7 @@
 #include <iostream>
 #include <ctime>
 #include <fstream>
+#include <limits>
 using namespace std;
 int M = 34234;
 
@@ -30,25 +31,32 @@ int main() {
     cout << "Introdueix quants valors vols per cada Key, 'N'"<<endl<< "(Num. de Valors per el fitxer 1 * N:)"<<endl;
     cin >> n2;
     int numero = 0;
-    
+    time_t var_time;
     //Generador de dades
     ofstream arxiu;
     arxiu.open("arxiu2.txt");
     for(int i = 0; i < n; ++i){
         for(int j = 0; j < n2; ++j){
-            time_t var_time = time(0);
-            numero *= var_time;
+            var_time = clock();
+			//numero = M;
+            numero = var_time % numeric_limits<int>::max();
             numero += M % semilla;
+			numero = numero % numeric_limits<int>::max();
             arxiu << abs(numero) << endl;
         }
     }
+    cout << "antes del close" << endl;
     arxiu.close();
+	cout << "despures del close" << endl;
     arxiu.open("arxiu1.txt");
+	cout << "despues del open" << endl;
     for(int i = 0; i < n; ++i){
-        time_t var_time = time(0);
-        numero *= var_time;
-        numero += M % semilla;
-        arxiu << abs(numero) << endl;
+        var_time = clock();
+		//numero = M;
+        numero = var_time % numeric_limits<int>::max();
+            numero += M % semilla;
+			numero = numero % numeric_limits<int>::max();
+            arxiu << abs(numero) << endl;
     }
     arxiu.close();
 }

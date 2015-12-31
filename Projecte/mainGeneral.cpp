@@ -53,19 +53,13 @@ int main(){
     
     cout << "Insercio de hash..." << endl;
     //omplir taula de hash
-    taula_hash hash(temanyDadesArxiu1);
+    taula_hash hash(2*temanyDadesArxiu1);
 	
-	////ESTO ES SOLO PARA K TE FUNCIONE HASTA K CAMBIES A K LEA DEL VECTOR
-	ifstream arxiu2("jocdeprobes/jp1.txt");
-	arxiu2 >> buffer;
-	///////////////////
 	
     start = clock();
-    while(!arxiu.eof()){
-        int aux;
-        arxiu2 >> aux;
-        hash.insertKey(aux);
-    }
+	for (unsigned int i = 0; i < keys_diccionario.size(); i++) 
+		hash.insertKey(keys_diccionario[i]);
+
     duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     
     cout << "Insercio de hash completada" << endl;
@@ -133,12 +127,9 @@ int main(){
     //comprvar elements hash
     cout << "Comprovacio de hash..." << endl;
     start = clock();
-    while(!arxiuTexto.eof()){
-        int aux;
-        arxiuTexto >> aux;
-        if(hash.getKey(aux))trobats++;
-        else fallats ++;
-    }
+	for (unsigned int i = 0; i < valores_texto.size(); i++) 
+		if (hash.getKey(valores_texto[i])) trobats++;
+		else fallats++;
     duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
     
     cout << "Comprovacio de hash completada" << endl;
@@ -150,17 +141,12 @@ int main(){
     cout << "-------------------------------------------" << endl;
     cout << endl << endl;
     
-    //reset arxiu entrada2
-    arxiuTexto.close();
-    ifstream arxiu3("jocdeprobes/jp2.txt");
-	
-	
-	
-	
+    
+
 	//BLOOOOOM
 	trobats = 0, fallats = 0;
     
-    //comprvar elements cerca binaria
+    //comprvar elements filtre bloom
     cout << "Comprovacio del filtre de bloom..." << endl;
     start = clock();
 	//COMPROBAMOS SI ALGUNA PALABRA DE LAS INEXISTENTES, 
@@ -176,16 +162,14 @@ int main(){
     cout << "Fallats: " << fallats << endl;
     cout << "Comprovacions relitzades totals: " << cb.getComprovacions() << endl;
     cout << "-------------------------------------------" << endl;
-    cout << endl;
+    cout << endl << endl;
 	
 	
 	
 	
-	
-	
-	
-	
-	
+	//reset arxiu entrada2
+    arxiuTexto.close();
+    ifstream arxiu3("jocdeprobes/jp2.txt");
 	
     trobats = 0, fallats = 0;
     
