@@ -93,7 +93,7 @@ int main(){
     cout << "Insercio del vector de cerca binaria..." << endl;
     start = clock();
     
-    CercaBinaria cb("jocdeprobes/jp1.txt");
+    CercaBinaria cb(keys_diccionario);
     
 
     duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;

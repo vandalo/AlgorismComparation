@@ -9,14 +9,13 @@ using namespace std;
 class CercaBinaria {
 
 	private:
-		vector<int> diccionari;
-		ifstream arxiu_diccionari;
+		vector<unsigned int> diccionari;
         int num_comprovacions;
-		int binary_search(const vector<int>& v, int x, int esq, int dre);
+		int binary_search(const vector<unsigned int>& v, int x, int esq, int dre);
 
 	public:
 
-		CercaBinaria(const char* path);
+		CercaBinaria(const vector<unsigned int>& v);
         int getComprovacions();
 		bool existeix(int num);
 
