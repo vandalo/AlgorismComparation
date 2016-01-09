@@ -1,20 +1,20 @@
-Test amb 182664 dades en el diccionari
+Test amb 100000 dades en el diccionari
 
 Insercio de hash...
 Insercio de hash completada
-Temps d'insercio: 0.035737
+Temps d'insercio: 0.011231
 
 Insercio de la taula de bits del filtre de bloom...
 Insercio completada
-Temps d'insercio: 0.131817
+Temps d'insercio: 0.034662
 
 Insercio del vector de cerca binaria...
 Insercio al vector de cerca binaria completada
-Temps d'insercio: 0.024145
+Temps d'insercio: 0.007705
 
 Insercio del trie...
 Insercio al trie completada
-Temps d'insercio: 0.124648
+Temps d'insercio: 0.036453
 
 
 
@@ -25,39 +25,39 @@ Temps d'insercio: 0.124648
 Comprovacio de hash...
 Comprovacio de hash completada
 -------------------------------------------
-Temps d'acces: 0.032258
-Encerts: 236955
-Fallats: 213045
-Comprovacions relitzades totals: 278835
+Temps d'acces: 0.007578
+Encerts: 33054
+Fallats: 116946
+Comprovacions relitzades totals: 66024
 -------------------------------------------
 
 
 Comprovacio del filtre de bloom...
 Comprovacio de bloom completada
 -------------------------------------------
-Temps d'acces: 0.185221
-Encerts: 236955
-Fallats: 213045
-Comprovacions relitzades totals: 8100000
+Temps d'acces: 0.023306
+Encerts: 33055
+Fallats: 116945
+Comprovacions relitzades totals: 2550000
 -------------------------------------------
 
 
 Comprovacio de trie...
 Comprovacio de trie completada
 -------------------------------------------
-Temps d'acces: 0.18561
-Encerts: 236955
-Fallats: 213045
-Comprovacions relitzades totals: 278835
+Temps d'acces: 0.04902
+Encerts: 33054
+Fallats: 116946
+Comprovacions relitzades totals: 66024
 -------------------------------------------
 
 
 Comprovacio de cerca binaria...
 Comprovacio de cerca binaria completada
 -------------------------------------------
-Temps d'acces: 69.757
-Encerts: 236955
-Fallats: 213045
-Comprovacions relitzades totals: -154241025
+Temps d'acces: 8.65873
+Encerts: 33054
+Fallats: 116946
+Comprovacions relitzades totals: 6933993984
 -------------------------------------------
 

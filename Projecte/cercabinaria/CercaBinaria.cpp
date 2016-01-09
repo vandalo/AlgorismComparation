@@ -23,6 +23,6 @@ bool CercaBinaria::existeix(int n){
 
 }
 
-int CercaBinaria::getComprovacions(){
+unsigned long long int CercaBinaria::getComprovacions(){
     return this->num_comprovacions;
 }

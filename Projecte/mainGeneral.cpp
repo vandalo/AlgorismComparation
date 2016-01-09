@@ -35,8 +35,6 @@ int main(){
     cout << endl;
     clock_t start;
     double duration;
-	vector<unsigned int> keys_diccionario;
-	vector<unsigned int> valores_texto;
     
 	/////////////////////////////////////////////////////
 	///////BUCLE PARA COMPROBAR LOS JUEGOS DE PRUEBAS
@@ -60,17 +58,19 @@ int main(){
 	}
 	
 	for (unsigned int i = 0; i < numTests; i++){
+		vector<unsigned int> keys_diccionario;
+		vector<unsigned int> valores_texto;
 		aux2 = "jocdeprobes/" + diccionarios[i];
 		cout << "Joc de probes: " << aux2 << endl;
 		unsigned int ii = i;
 		//arxiu d'entrada
 		ifstream arxiu(aux2.c_str());// jp1.txt);
 		int temanyDadesArxiu1;
-		arxiu >> temanyDadesArxiu1;
 		unsigned int buffer;
 		while (arxiu >>buffer) keys_diccionario.push_back(buffer);
+		temanyDadesArxiu1 = keys_diccionario.size();
 		
-		aux2 = "jocdeprobes/test"+ tests[i] + ".txt";
+		aux2 = "outputs/test"+ tests[i] + ".txt";
 		ofstream arxiuSortides;
 		arxiuSortides.open(aux2.c_str());
 		
