@@ -1,22 +1,22 @@
-Test amb 300000 dades en el diccionari
+Test amb 500000 dades en el diccionari
 
 Insercio de hash...
 Insercio de hash completada
-Temps d'insercio: 0.031475
+Temps d'insercio: 0.055536
 
 Insercio de la taula de bits del filtre de bloom...
-Numero de funcions de hash: 15
-Tamany de taula de bits: 7875059
+Numero de funcions de hash: 16
+Tamany de taula de bits: 13656294
 Insercio completada
-Temps d'insercio: 0.103393
+Temps d'insercio: 0.196858
 
 Insercio del vector de cerca binaria...
 Insercio al vector de cerca binaria completada
-Temps d'insercio: 0.023225
+Temps d'insercio: 0.041072
 
 Insercio del trie...
 Insercio al trie completada
-Temps d'insercio: 0.12764
+Temps d'insercio: 0.256568
 
 
 
@@ -27,39 +27,39 @@ Temps d'insercio: 0.12764
 Comprovacio de hash...
 Comprovacio de hash completada
 -------------------------------------------
-Temps d'acces: 0.035105
-Encerts: 133562
-Fallats: 466438
-Comprovacions relitzades totals: 266851
+Temps d'acces: 0.062117
+Encerts: 221173
+Fallats: 778827
+Comprovacions relitzades totals: 442234
 -------------------------------------------
 
 
 Comprovacio del filtre de bloom...
 Comprovacio de bloom completada
 -------------------------------------------
-Temps d'acces: 0.13888
-Encerts: 133562
-Fallats: 466438
-Comprovacions relitzades totals: 9000000
+Temps d'acces: 0.250225
+Encerts: 221173
+Fallats: 778827
+Comprovacions relitzades totals: 16000000
 -------------------------------------------
 
 
 Comprovacio de trie...
 Comprovacio de trie completada
 -------------------------------------------
-Temps d'acces: 0.209467
-Encerts: 133562
-Fallats: 466438
-Comprovacions relitzades totals: 266851
+Temps d'acces: 0.396652
+Encerts: 221173
+Fallats: 778827
+Comprovacions relitzades totals: 442234
 -------------------------------------------
 
 
 Comprovacio de cerca binaria...
 Comprovacio de cerca binaria completada
 -------------------------------------------
-Temps d'acces: 99.2817
-Encerts: 133562
-Fallats: 466438
-Comprovacions relitzades totals: 83119020609
+Temps d'acces: 277.365
+Encerts: 221173
+Fallats: 778827
+Comprovacions relitzades totals: 231526965507
 -------------------------------------------
 

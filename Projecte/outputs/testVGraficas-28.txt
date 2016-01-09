@@ -1,22 +1,22 @@
-Test amb 300000 dades en el diccionari
+Test amb 750000 dades en el diccionari
 
 Insercio de hash...
 Insercio de hash completada
-Temps d'insercio: 0.031475
+Temps d'insercio: 0.097246
 
 Insercio de la taula de bits del filtre de bloom...
-Numero de funcions de hash: 15
-Tamany de taula de bits: 7875059
+Numero de funcions de hash: 17
+Tamany de taula de bits: 21121153
 Insercio completada
-Temps d'insercio: 0.103393
+Temps d'insercio: 0.325085
 
 Insercio del vector de cerca binaria...
 Insercio al vector de cerca binaria completada
-Temps d'insercio: 0.023225
+Temps d'insercio: 0.063704
 
 Insercio del trie...
 Insercio al trie completada
-Temps d'insercio: 0.12764
+Temps d'insercio: 0.415287
 
 
 
@@ -27,39 +27,31 @@ Temps d'insercio: 0.12764
 Comprovacio de hash...
 Comprovacio de hash completada
 -------------------------------------------
-Temps d'acces: 0.035105
-Encerts: 133562
-Fallats: 466438
-Comprovacions relitzades totals: 266851
+Temps d'acces: 0.110225
+Encerts: 331721
+Fallats: 1168279
+Comprovacions relitzades totals: 661927
 -------------------------------------------
 
 
 Comprovacio del filtre de bloom...
 Comprovacio de bloom completada
 -------------------------------------------
-Temps d'acces: 0.13888
-Encerts: 133562
-Fallats: 466438
-Comprovacions relitzades totals: 9000000
+Temps d'acces: 0.423651
+Encerts: 331721
+Fallats: 1168279
+Comprovacions relitzades totals: 25500000
 -------------------------------------------
 
 
 Comprovacio de trie...
 Comprovacio de trie completada
 -------------------------------------------
-Temps d'acces: 0.209467
-Encerts: 133562
-Fallats: 466438
-Comprovacions relitzades totals: 266851
+Temps d'acces: 0.706333
+Encerts: 331721
+Fallats: 1168279
+Comprovacions relitzades totals: 661927
 -------------------------------------------
 
 
 Comprovacio de cerca binaria...
-Comprovacio de cerca binaria completada
--------------------------------------------
-Temps d'acces: 99.2817
-Encerts: 133562
-Fallats: 466438
-Comprovacions relitzades totals: 83119020609
--------------------------------------------
-
