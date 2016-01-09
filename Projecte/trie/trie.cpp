@@ -12,7 +12,7 @@ void Trie::insert(unsigned int word){
 	node *current = head;
 	current->prefix_count++;
 	string numberAsWord = to_string(word);
-	for(int i = 0 ; i < numberAsWord.length(); ++i)
+	for(unsigned int i = 0 ; i < numberAsWord.length(); ++i)
 	{
 		int digit = (int)numberAsWord[i] - (int)'0';	//extrct first character of word
 		if(current->child[digit] == NULL)
@@ -27,7 +27,7 @@ void Trie::insert(unsigned int word){
 bool Trie::exists(unsigned int word){
 	node *current = head;
 	string numberAsWord = to_string(word);
-	for(int i = 0 ; i < numberAsWord.length(); ++i)
+	for(unsigned int i = 0 ; i < numberAsWord.length(); ++i)
 	{
 		int digit = (int)numberAsWord[i] - (int)'0';
 		if(current->child[digit] == NULL)

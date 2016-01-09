@@ -14,6 +14,7 @@
 #include "hash/Hash.hpp"
 #include "cercabinaria/CercaBinaria.hpp"
 #include "bloom/bloom_filter.hpp"
+#include "trie/trie.hpp"
 
 using namespace std;
 
@@ -124,6 +125,22 @@ int main(){
 		cout << "Temps d'insercio: " << duration <<endl;
 		cout << endl;
 		
+
+        /////////////////////////////////////
+        //omplim trie
+        cout << "Insercio del trie..." << endl;
+        start = clock();
+
+        Trie *t = new Trie();
+
+        for(unsigned int i = 0; i < keys_diccionario.size(); ++i) t->insert(keys_diccionario[i]);
+
+        duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+
+        cout << "Insercio al trie completada" << endl;
+        cout << "Temps d'insercio: " << duration <<endl;
+        cout << endl;
+
 		
 		arxiu.close();
 		
@@ -188,8 +205,26 @@ int main(){
 		/////////////////////////
 		cout << "-------------------------------------------" << endl;
 		cout << endl << endl;
-		
-		
+
+        trobats = 0;
+        fallats = 0;
+        //comprvar elements trie
+        cout << "Comprovacio de trie..." << endl;
+        start = clock();
+        for (unsigned int i = 0; i < valores_texto.size(); i++) {
+            if (t-> exists(valores_texto[i])) trobats++;
+            else fallats++;
+        }
+        duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+        
+        cout << "Comprovacio de trie completada" << endl;
+        cout << "-------------------------------------------" << endl;
+        cout << "Temps d'acces: " << duration <<endl;
+        cout << "Encerts: " << trobats << endl;
+        cout << "Fallats: " << fallats << endl;
+        cout << "Comprovacions relitzades totals: " << hash.getComprovacions() << endl;
+        cout << "-------------------------------------------" << endl;
+        cout << endl << endl;
 		
 		
 		//reset arxiu entrada2
