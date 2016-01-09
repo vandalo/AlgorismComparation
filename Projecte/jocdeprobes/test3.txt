@@ -1,0 +1,55 @@
+Test amb 182664 dades en el diccionari
+
+Insercio de hash...
+Insercio de hash completada
+Temps d'insercio: 0.035737
+
+Insercio de la taula de bits del filtre de bloom...
+Insercio completada
+Temps d'insercio: 0.131817
+
+Insercio del vector de cerca binaria...
+Insercio al vector de cerca binaria completada
+Temps d'insercio: 0.024145
+
+Insercio del trie...
+Insercio al trie completada
+Temps d'insercio: 0.124648
+
+
+
+ ;---------------------------------------;
+ ;          Prueba de contains           ;
+ ;---------------------------------------;
+
+Comprovacio de hash...
+Comprovacio de hash completada
+-------------------------------------------
+Temps d'acces: 0.032258
+Encerts: 236955
+Fallats: 213045
+Comprovacions relitzades totals: 278835
+-------------------------------------------
+
+
+Comprovacio del filtre de bloom...
+Comprovacio de bloom completada
+-------------------------------------------
+Temps d'acces: 0.185221
+Encerts: 236955
+Fallats: 213045
+Comprovacions relitzades totals: 8100000
+-------------------------------------------
+
+
+Comprovacio de trie...
+Comprovacio de trie completada
+-------------------------------------------
+Temps d'acces: 0.18561
+Encerts: 236955
+Fallats: 213045
+Comprovacions relitzades totals: 278835
+-------------------------------------------
+
+
+Comprovacio de cerca binaria...

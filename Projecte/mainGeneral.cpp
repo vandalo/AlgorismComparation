@@ -70,19 +70,18 @@ int main(){
 		unsigned int buffer;
 		while (arxiu >>buffer) keys_diccionario.push_back(buffer);
 		
-		aux2 = "jocdeprobes/" + "test"+ to_string(ii) + ".txt";
+		aux2 = "jocdeprobes/test"+ tests[i] + ".txt";
 		ofstream arxiuSortides;
-		arxiu.open("Log_tests.txt");
+		arxiuSortides.open(aux2.c_str());
 		
 		//////////////////////////////////
 		//////////////TESTS//////////////
 		/////////////////////////////////
 		
-		cout << endl;
-		cout << "Test amb " << temanyDadesArxiu1 << " dades en el diccionari" << endl;
-		cout << endl;
+		arxiuSortides << "Test amb " << temanyDadesArxiu1 << " dades en el diccionari" << endl;
+		arxiuSortides << endl;
 		
-		cout << "Insercio de hash..." << endl;
+		arxiuSortides << "Insercio de hash..." << endl;
 		//omplir taula de hash
 		taula_hash hash(2*temanyDadesArxiu1);
 		
@@ -93,16 +92,16 @@ int main(){
 
 		duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
 		
-		cout << "Insercio de hash completada" << endl;
-		cout << "Temps d'insercio: " << duration <<endl;
-		cout << endl;
+		arxiuSortides << "Insercio de hash completada" << endl;
+		arxiuSortides << "Temps d'insercio: " << duration <<endl;
+		arxiuSortides << endl;
 		
 		
 		
 		
 		//omplir filtre de bloom
 		//////////////
-		cout << "Insercio de la taula de bits del filtre de bloom..." << endl;
+		arxiuSortides << "Insercio de la taula de bits del filtre de bloom..." << endl;
 		const double expected_fpp = 1.0 / keys_diccionario.size();
 		unsigned int random_seed = 0;
 		bloom_parameters parameters(keys_diccionario.size(), expected_fpp, ++random_seed); //iniciar parametros
@@ -114,14 +113,14 @@ int main(){
 		
 		duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
 
-		cout << "Insercio completada" << endl;
-		cout << "Temps d'insercio: " << duration <<endl;
-		cout << endl;
+		arxiuSortides << "Insercio completada" << endl;
+		arxiuSortides << "Temps d'insercio: " << duration <<endl;
+		arxiuSortides << endl;
 		
 		
 		/////////////////////////////////////
 		//omplim vetor cerca binaria
-		cout << "Insercio del vector de cerca binaria..." << endl;
+		arxiuSortides << "Insercio del vector de cerca binaria..." << endl;
 		start = clock();
 		
 		CercaBinaria cb(keys_diccionario);
@@ -129,14 +128,14 @@ int main(){
 
 		duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
 
-		cout << "Insercio al vector de cerca binaria completada" << endl;
-		cout << "Temps d'insercio: " << duration <<endl;
-		cout << endl;
+		arxiuSortides << "Insercio al vector de cerca binaria completada" << endl;
+		arxiuSortides << "Temps d'insercio: " << duration <<endl;
+		arxiuSortides << endl;
 		
 
         /////////////////////////////////////
         //omplim trie
-        cout << "Insercio del trie..." << endl;
+        arxiuSortides << "Insercio del trie..." << endl;
         start = clock();
 
         Trie *t = new Trie();
@@ -145,9 +144,9 @@ int main(){
 
         duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
 
-        cout << "Insercio al trie completada" << endl;
-        cout << "Temps d'insercio: " << duration <<endl;
-        cout << endl;
+        arxiuSortides << "Insercio al trie completada" << endl;
+        arxiuSortides << "Temps d'insercio: " << duration <<endl;
+        arxiuSortides << endl;
 
 		
 		arxiu.close();
@@ -158,10 +157,10 @@ int main(){
 		
 		
 		
-			cout << endl << endl <<
-				" ;---------------------------------------;" <<endl;
-		cout << " ;          Prueba de contains           ;" <<endl;
-		cout << " ;---------------------------------------;" <<endl << endl;
+		arxiuSortides << endl << endl <<
+						 " ;---------------------------------------;" <<endl;
+		arxiuSortides << " ;          Prueba de contains           ;" <<endl;
+		arxiuSortides << " ;---------------------------------------;" <<endl << endl;
 		
 		//arxiu d'entrada2
 		aux2 = "jocdeprobes/" + textos[ii];
@@ -173,7 +172,7 @@ int main(){
 		
 		
 		//comprvar elements hash
-		cout << "Comprovacio de hash..." << endl;
+		arxiuSortides << "Comprovacio de hash..." << endl;
 		start = clock();
 		for (unsigned int i = 0; i < valores_texto.size(); i++) {
 			if (hash.getKey(valores_texto[i])) trobats++;
@@ -181,14 +180,14 @@ int main(){
 		}
 		duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
 		
-		cout << "Comprovacio de hash completada" << endl;
-		cout << "-------------------------------------------" << endl;
-		cout << "Temps d'acces: " << duration <<endl;
-		cout << "Encerts: " << trobats << endl;
-		cout << "Fallats: " << fallats << endl;
-		cout << "Comprovacions relitzades totals: " << hash.getComprovacions() << endl;
-		cout << "-------------------------------------------" << endl;
-		cout << endl << endl;
+		arxiuSortides << "Comprovacio de hash completada" << endl;
+		arxiuSortides << "-------------------------------------------" << endl;
+		arxiuSortides << "Temps d'acces: " << duration <<endl;
+		arxiuSortides << "Encerts: " << trobats << endl;
+		arxiuSortides << "Fallats: " << fallats << endl;
+		arxiuSortides << "Comprovacions relitzades totals: " << hash.getComprovacions() << endl;
+		arxiuSortides << "-------------------------------------------" << endl;
+		arxiuSortides << endl << endl;
 		
 		
 
@@ -196,28 +195,28 @@ int main(){
 		trobats = 0, fallats = 0;
 		
 		//comprvar elements filtre bloom
-		cout << "Comprovacio del filtre de bloom..." << endl;
+		arxiuSortides << "Comprovacio del filtre de bloom..." << endl;
 		start = clock();
 		trobats = filter.contains(valores_texto.begin(), valores_texto.end());
 		fallats = valores_texto.size() - trobats;
 		duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
 		
-		cout << "Comprovacio de bloom completada" << endl;
-		cout << "-------------------------------------------" << endl;
-		cout << "Temps d'acces: " << duration <<endl;
-		cout << "Encerts: " << trobats << endl;
-		cout << "Fallats: " << fallats << endl;
-		cout << "Comprovacions relitzades totals: " << filter.comprobaciones(valores_texto.size()) << endl;
+		arxiuSortides << "Comprovacio de bloom completada" << endl;
+		arxiuSortides << "-------------------------------------------" << endl;
+		arxiuSortides << "Temps d'acces: " << duration <<endl;
+		arxiuSortides << "Encerts: " << trobats << endl;
+		arxiuSortides << "Fallats: " << fallats << endl;
+		arxiuSortides << "Comprovacions relitzades totals: " << filter.comprobaciones(valores_texto.size()) << endl;
 		///////////////////
 		//HE DE COMPROBAR EL NUMERO DE COMPROBACIONES K HAGO
 		/////////////////////////
-		cout << "-------------------------------------------" << endl;
-		cout << endl << endl;
+		arxiuSortides << "-------------------------------------------" << endl;
+		arxiuSortides << endl << endl;
 
         trobats = 0;
         fallats = 0;
         //comprvar elements trie
-        cout << "Comprovacio de trie..." << endl;
+        arxiuSortides << "Comprovacio de trie..." << endl;
         start = clock();
         for (unsigned int i = 0; i < valores_texto.size(); i++) {
             if (t-> exists(valores_texto[i])) trobats++;
@@ -225,14 +224,14 @@ int main(){
         }
         duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
         
-        cout << "Comprovacio de trie completada" << endl;
-        cout << "-------------------------------------------" << endl;
-        cout << "Temps d'acces: " << duration <<endl;
-        cout << "Encerts: " << trobats << endl;
-        cout << "Fallats: " << fallats << endl;
-        cout << "Comprovacions relitzades totals: " << hash.getComprovacions() << endl;
-        cout << "-------------------------------------------" << endl;
-        cout << endl << endl;
+        arxiuSortides << "Comprovacio de trie completada" << endl;
+        arxiuSortides << "-------------------------------------------" << endl;
+        arxiuSortides << "Temps d'acces: " << duration <<endl;
+        arxiuSortides << "Encerts: " << trobats << endl;
+        arxiuSortides << "Fallats: " << fallats << endl;
+        arxiuSortides << "Comprovacions relitzades totals: " << hash.getComprovacions() << endl;
+        arxiuSortides << "-------------------------------------------" << endl;
+        arxiuSortides << endl << endl;
 		
 		
 		//reset arxiu entrada2
@@ -241,7 +240,7 @@ int main(){
 		trobats = 0, fallats = 0;
 		
 		//comprvar elements cerca binaria
-		cout << "Comprovacio de cerca binaria..." << endl;
+		arxiuSortides << "Comprovacio de cerca binaria..." << endl;
 		start = clock();
 		for (unsigned int i = 0; i < valores_texto.size(); i++) {
 			if (cb.existeix(valores_texto[i])) trobats++;
@@ -250,19 +249,18 @@ int main(){
 
 		duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
 		
-		cout << "Comprovacio de cerca binaria completada" << endl;
-		cout << "-------------------------------------------" << endl;
-		cout << "Temps d'acces: " << duration <<endl;
-		cout << "Encerts: " << trobats << endl;
-		cout << "Fallats: " << fallats << endl;
-		cout << "Comprovacions relitzades totals: " << cb.getComprovacions() << endl;
-		cout << "-------------------------------------------" << endl;
-		cout << endl;
+		arxiuSortides << "Comprovacio de cerca binaria completada" << endl;
+		arxiuSortides << "-------------------------------------------" << endl;
+		arxiuSortides << "Temps d'acces: " << duration <<endl;
+		arxiuSortides << "Encerts: " << trobats << endl;
+		arxiuSortides << "Fallats: " << fallats << endl;
+		arxiuSortides << "Comprovacions relitzades totals: " << cb.getComprovacions() << endl;
+		arxiuSortides << "-------------------------------------------" << endl;
+		arxiuSortides << endl;
 
 		cout << "-------------------------------------------" << endl;
 		cout << endl;
 		cout << "-------------------------------------------" << endl;
-		cout << endl << endl;
 	}
     cout << "------------------FIN---------------------" << endl;
 }
