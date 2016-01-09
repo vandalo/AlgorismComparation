@@ -70,7 +70,7 @@ int main(){
 		while (arxiu >>buffer) keys_diccionario.push_back(buffer);
 		temanyDadesArxiu1 = keys_diccionario.size();
 		
-		aux2 = "outputs/testV2-"+ tests[i] + ".txt";
+		aux2 = "outputs/test"+ tests[i] + ".txt";
 		ofstream arxiuSortides;
 		arxiuSortides.open(aux2.c_str());
 		
@@ -83,7 +83,7 @@ int main(){
 		
 		arxiuSortides << "Insercio de hash..." << endl;
 		//omplir taula de hash
-		taula_hash hash(temanyDadesArxiu1);
+		taula_hash hash(2*temanyDadesArxiu1);
 		
 		
 		start = clock();
@@ -105,7 +105,6 @@ int main(){
 		const double expected_fpp = 1.0 / keys_diccionario.size();
 		unsigned int random_seed = 0;
 		bloom_parameters parameters(keys_diccionario.size(), expected_fpp, ++random_seed); //iniciar parametros
-		if (parameters.optimos.num_hashes > 5) parameters.optimos.num_hashes -= 2;
 		bloom_filter filter(parameters); //iniciar filtro con parametros optimos
 		
 		start = clock();
