@@ -10,6 +10,7 @@
 #include <fstream>
 #include <cstdio>
 #include <ctime>
+#include <string>
 #include "hash/Hash.hpp"
 #include "cercabinaria/CercaBinaria.hpp"
 #include "bloom/bloom_filter.hpp"
@@ -43,17 +44,19 @@ int main(){
 	vector<string> diccionarios;
 	vector<string> textos;
 	cin >> numTests;
-	unsigned int aux;
+	string aux;
 	string aux2;
 	for (unsigned int i = 0; i < numTests; i++){
 		cin >> aux;
-		aux2 = aux + ".txt";
+		aux2 = aux + '.' + "txt";
+		cout << "AUXxxx: " << aux2 << endl;
 		diccionarios.push_back("dic" + aux2);
 		textos.push_back("text" + aux2);
 	}
 	
 	for (unsigned int i = 0; i < numTests; i++){
 		aux2 = "jocdeprobes/" + diccionarios[i];
+		cout << "AUX: " << aux2 << endl;
 		unsigned int ii = i;
 		//arxiu d'entrada
 		ifstream arxiu(aux2.c_str());// jp1.txt);
@@ -218,7 +221,7 @@ int main(){
 		cout << "-------------------------------------------" << endl;
 		cout << endl << endl;
 	}
-    
+    cout << "------------------FIN---------------------" << endl;
 }
 
 
