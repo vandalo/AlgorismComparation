@@ -37,6 +37,11 @@ public:
 	}
 	
 	
+	inline unsigned int comprobaciones(unsigned int palabras){
+		return numHashes * palabras;
+	}
+	
+	
 
 	inline virtual unsigned long long int size() const {
 		return table_size;
