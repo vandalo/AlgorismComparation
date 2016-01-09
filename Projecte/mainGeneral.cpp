@@ -44,22 +44,24 @@ int main(){
 	unsigned int numTests;
 	vector<string> diccionarios;
 	vector<string> textos;
+	vector<string> tests;
     cout << "Quants jocs de proba tens? " << endl;
 	cin >> numTests;
+	cout << numTests << " jocs" << endl;
 	string aux;
 	string aux2;
 	for (unsigned int i = 0; i < numTests; i++){
-		//cin >> aux;
-		//aux2 = aux + '.' + "txt";
-        aux2 = to_string(i+1) + ".txt";
-		cout << "AUXxxx: " << aux2 << endl;
+		cin >> aux;
+		tests.push_back(aux);
+		aux2 = aux + '.' + "txt";
+        //aux2 = to_string(i+1) + ".txt";
 		diccionarios.push_back("dic" + aux2);
 		textos.push_back("text" + aux2);
 	}
 	
 	for (unsigned int i = 0; i < numTests; i++){
 		aux2 = "jocdeprobes/" + diccionarios[i];
-		cout << "AUX: " << aux2 << endl;
+		cout << "Joc de probes: " << aux2 << endl;
 		unsigned int ii = i;
 		//arxiu d'entrada
 		ifstream arxiu(aux2.c_str());// jp1.txt);
@@ -67,6 +69,10 @@ int main(){
 		arxiu >> temanyDadesArxiu1;
 		unsigned int buffer;
 		while (arxiu >>buffer) keys_diccionario.push_back(buffer);
+		
+		aux2 = "jocdeprobes/" + "test"+ to_string(ii) + ".txt";
+		ofstream arxiuSortides;
+		arxiu.open("Log_tests.txt");
 		
 		//////////////////////////////////
 		//////////////TESTS//////////////
