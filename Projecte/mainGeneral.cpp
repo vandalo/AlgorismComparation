@@ -44,12 +44,14 @@ int main(){
 	unsigned int numTests;
 	vector<string> diccionarios;
 	vector<string> textos;
+    cout << "Quants jocs de proba tens? " << endl;
 	cin >> numTests;
 	string aux;
 	string aux2;
 	for (unsigned int i = 0; i < numTests; i++){
-		cin >> aux;
-		aux2 = aux + '.' + "txt";
+		//cin >> aux;
+		//aux2 = aux + '.' + "txt";
+        aux2 = to_string(i+1) + ".txt";
 		cout << "AUXxxx: " << aux2 << endl;
 		diccionarios.push_back("dic" + aux2);
 		textos.push_back("text" + aux2);
