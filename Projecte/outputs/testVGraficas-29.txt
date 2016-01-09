@@ -2,21 +2,21 @@ Test amb 750000 dades en el diccionari
 
 Insercio de hash...
 Insercio de hash completada
-Temps d'insercio: 0.097246
+Temps d'insercio: 0.087874
 
 Insercio de la taula de bits del filtre de bloom...
 Numero de funcions de hash: 17
 Tamany de taula de bits: 21121153
 Insercio completada
-Temps d'insercio: 0.325085
+Temps d'insercio: 0.345449
 
 Insercio del vector de cerca binaria...
 Insercio al vector de cerca binaria completada
-Temps d'insercio: 0.063704
+Temps d'insercio: 0.067822
 
 Insercio del trie...
 Insercio al trie completada
-Temps d'insercio: 0.415287
+Temps d'insercio: 0.404386
 
 
 
@@ -27,19 +27,19 @@ Temps d'insercio: 0.415287
 Comprovacio de hash...
 Comprovacio de hash completada
 -------------------------------------------
-Temps d'acces: 0.110225
-Encerts: 331721
-Fallats: 1168279
-Comprovacions relitzades totals: 661927
+Temps d'acces: 0.09502
+Encerts: 331385
+Fallats: 1168615
+Comprovacions relitzades totals: 663476
 -------------------------------------------
 
 
 Comprovacio del filtre de bloom...
 Comprovacio de bloom completada
 -------------------------------------------
-Temps d'acces: 0.423651
-Encerts: 331721
-Fallats: 1168279
+Temps d'acces: 0.430989
+Encerts: 331385
+Fallats: 1168615
 Comprovacions relitzades totals: 25500000
 -------------------------------------------
 
@@ -47,19 +47,19 @@ Comprovacions relitzades totals: 25500000
 Comprovacio de trie...
 Comprovacio de trie completada
 -------------------------------------------
-Temps d'acces: 0.706333
-Encerts: 331721
-Fallats: 1168279
-Comprovacions relitzades totals: 661927
+Temps d'acces: 0.71105
+Encerts: 331385
+Fallats: 1168615
+Comprovacions relitzades totals: 663476
 -------------------------------------------
 
 
 Comprovacio de cerca binaria...
 Comprovacio de cerca binaria completada
 -------------------------------------------
-Temps d'acces: 655.017
-Encerts: 331721
-Fallats: 1168279
-Comprovacions relitzades totals: 521783212118
+Temps d'acces: 653.049
+Encerts: 331385
+Fallats: 1168615
+Comprovacions relitzades totals: 520794317375
 -------------------------------------------
 
