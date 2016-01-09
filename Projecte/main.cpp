@@ -41,7 +41,7 @@ int main() {
         ofstream arxiu;
         arxiu.open("dic"+to_string(i+1)+".txt");
         for(int i = 0; i < n; ++i){
-            int random = rand()%(n*4);
+            int random = rand()%(n*2);
             arxiu << abs(random) << endl;
         }
         arxiu.close();
