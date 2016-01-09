@@ -70,7 +70,7 @@ int main(){
 		while (arxiu >>buffer) keys_diccionario.push_back(buffer);
 		temanyDadesArxiu1 = keys_diccionario.size();
 		
-		aux2 = "outputs/testV2-"+ tests[i] + ".txt";
+		aux2 = "outputs/testVGraficas-"+ tests[i] + ".txt";
 		ofstream arxiuSortides;
 		arxiuSortides.open(aux2.c_str());
 		
@@ -83,7 +83,7 @@ int main(){
 		
 		arxiuSortides << "Insercio de hash..." << endl;
 		//omplir taula de hash
-		taula_hash hash(temanyDadesArxiu1);
+		taula_hash hash(2*temanyDadesArxiu1);
 		
 		
 		start = clock();
@@ -106,6 +106,7 @@ int main(){
 		unsigned int random_seed = 0;
 		bloom_parameters parameters(keys_diccionario.size(), expected_fpp, ++random_seed); //iniciar parametros
 		if (parameters.optimos.num_hashes > 5) parameters.optimos.num_hashes -= 2;
+		if (parameters.optimos.num_hashes > 7) parameters.optimos.num_hashes -= 1;
 		bloom_filter filter(parameters); //iniciar filtro con parametros optimos
 		
 		start = clock();
@@ -114,6 +115,8 @@ int main(){
 		
 		duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
 
+		arxiuSortides << "Numero de funcions de hash: " << parameters.optimos.num_hashes << endl;
+		arxiuSortides << "Tamany de taula de bits: " << parameters.optimos.table_size << endl;
 		arxiuSortides << "Insercio completada" << endl;
 		arxiuSortides << "Temps d'insercio: " << duration <<endl;
 		arxiuSortides << endl;
