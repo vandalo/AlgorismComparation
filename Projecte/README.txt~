@@ -1,3 +1,11 @@
 COMPILAR:
 
-g++ hash/Hash.cpp cercabinaria/CercaBinaria.cpp mainGeneral.cpp
+make
+
+
+EJECUTAR:
+
+test1 < cinpruebas
+
+
+
