@@ -9,7 +9,7 @@ int CercaBinaria::binary_search(const vector<unsigned int>& v, int x, int esq, i
 
 	if(v[mid] == (unsigned int)x) return mid;
 	else if(v[mid] < (unsigned int)x) return binary_search(v,x,mid+1, dre);
-	else return binary_search(v,x,esq,dre-1);
+	else return binary_search(v,x,esq,mid-1);
 }
 
 CercaBinaria::CercaBinaria(const vector<unsigned int>& v){

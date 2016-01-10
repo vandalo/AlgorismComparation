@@ -2,21 +2,21 @@ Test amb 150000 dades en el diccionari
 
 Insercio de hash...
 Insercio de hash completada
-Temps d'insercio: 0.010697
+Temps d'insercio: 0.013926
 
 Insercio de la taula de bits del filtre de bloom...
 Numero de funcions de hash: 14
 Tamany de taula de bits: 3721133
 Insercio completada
-Temps d'insercio: 0.042356
+Temps d'insercio: 0.04393
 
 Insercio del vector de cerca binaria...
 Insercio al vector de cerca binaria completada
-Temps d'insercio: 0.011025
+Temps d'insercio: 0.011059
 
 Insercio del trie...
 Insercio al trie completada
-Temps d'insercio: 0.054827
+Temps d'insercio: 0.068959
 
 
 
@@ -27,7 +27,7 @@ Temps d'insercio: 0.054827
 Comprovacio de hash...
 Comprovacio de hash completada
 -------------------------------------------
-Temps d'acces: 0.014751
+Temps d'acces: 0.015886
 Encerts: 66136
 Fallats: 233864
 Comprovacions relitzades totals: 132620
@@ -37,7 +37,7 @@ Comprovacions relitzades totals: 132620
 Comprovacio del filtre de bloom...
 Comprovacio de bloom completada
 -------------------------------------------
-Temps d'acces: 0.046086
+Temps d'acces: 0.051327
 Encerts: 66136
 Fallats: 233864
 Comprovacions relitzades totals: 4200000
@@ -47,7 +47,7 @@ Comprovacions relitzades totals: 4200000
 Comprovacio de trie...
 Comprovacio de trie completada
 -------------------------------------------
-Temps d'acces: 0.091559
+Temps d'acces: 0.097116
 Encerts: 66136
 Fallats: 233864
 Comprovacions relitzades totals: 132620
@@ -57,9 +57,9 @@ Comprovacions relitzades totals: 132620
 Comprovacio de cerca binaria...
 Comprovacio de cerca binaria completada
 -------------------------------------------
-Temps d'acces: 24.736
+Temps d'acces: 0.04294
 Encerts: 66136
 Fallats: 233864
-Comprovacions relitzades totals: 20844969728
+Comprovacions relitzades totals: 5335182
 -------------------------------------------
 
